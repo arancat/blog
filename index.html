@@ -64,6 +64,94 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-js-basics-5-inherit" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2020/03/10/js-basics-5-inherit/" class="article-date">
+  <time datetime="2020-03-10T15:26:38.000Z" itemprop="datePublished">2020-03-10</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2020/03/10/js-basics-5-inherit/">js-basics-5-inherit</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>继承</p>
+<p>重点：call/apply方法，共享原型，圣杯模式，命名空间优化，对象枚举 </p>
+<p>作用，改变 this 指向。<br>区别，后面传的参数形式不同。<br>toFixed 是保留两位有效数字<br>例有个 bug，在控制台 0.14*100<br>出现 14.0000000000002，是 js 开发精度不准例向上取整 Math.ceil(123.234)<br>答案 124<br>例向下取整 Math.floor(123.999)<br>答案 123<br>例 Math.random()是产生一个 0 到 1 区间的开区间 随机数例</p>
+<p>所以一般在这种情况下，我们不用 toFixed，因为精度不准确</p>
+<p>例用这种方法取整更好，就不会精度不准确</p>
+<p>例</p>
+<p>注意：之前 js 在小数点后面最多能容纳 15-17 位，但是升级后能用科学计数法表示如 2e-17（是 2 乘以 10 的负 17 次方）<br>而小数点前面只能容纳 16 位的运算， 可正常计算的范围是小数点前后 16 位<br>例    任何一个方法都可以.call<br>.call 才是一个方法执行的真实面目</p>
+<p>直接执行Person.call ( )和Person ( )没有区别Person.call( );括号里面可以传东西<br> 如果Person.call( obj );里面的 call 让 person 所有的 this 都变成 obj<br>不 new 的话，this 默认指向 window。call 的使用必须要new<br>call 的第一位参数用于改变this 指向，第二位实参（对应第一个形参）及以后的参数<br> 都当做正常的实参，传到形参里面去<br> 借用别人的方法，实现自己的功能。<br>例写 test（）和写 test.call（）是一样的，→<br>例<br>如右图<br>两个人的需求有重复部分</p>
+<p>call 改变 this 指向，借用别人的函数，实现自己的功能。只能在你的需求完全涵盖别人的时候才能使用<br>如果不想要 age 这个，就不能使用这种方法</p>
+<p>继承发展史<br>//问题：过多的继承了没用的属性</p>
+<p>Person.call(this, name, age, sex);里面的 this 现在是 new 了以后的 var this={}<br>利用Person 方法，实现了Student 自己的封装例 function Wheel ( wheelSize,</p>
+<p>不能继承借用构造函数的原型 每次构造函数都要多走一个函数</p>
+<p>所以不算标准的继承模式<br>==&gt;浪费效率</p>
+<p>this 放进去的前提，这个函数必须是 new 来的</p>
+<p>apply 也是改变 this 指向的，只是传参列表不同，第一位也是改变 this 指向的人，第<br> 二位，apply 只能传一个实参，而且必须传数组 argunments call 需要把实参按照形参的个数传进去</p>
+<p>4.圣杯模式<br>圣杯模式是在方法三的共有原型，但是在共有原型的基础上有改变。共享原型是：son.prototype=father.prototype</p>
+<p>例：左下这种方法就不好使了，相当于右下。还是原型指向有问题，new 的时候用的是原来的原型，再 F.prototype =father.prototype 没用，son.prototype 没发生改变</p>
+<p>例，在雅虎时代，封装了 YUI3 库来解决方法三的不足，与圣杯模式相似。现在不用<br>YUI3 库，现在用 jq</p>
+<p>联系到闭包作用：可以实现封装，属性私有化。<br>例为什么在外部执行的divorce 能用内部的变量？能换成 xiaozhang？<br>因为 this.divorce 在对象上，由于对象被返回了，这个方法也被返回了。<br>因为闭包。这个函数被储存到了外部，所以储存了这个函数的执行期上下文。所以可以用这个闭包。所以var prepareWife 被下面的 this=fn 三个函数共用，这三个函数分别与 fn Deng 形成了闭包，共同用 Deng 的AO,所以可以在外部随意存取。</p>
+<p>deng.prepareWife 是 undefined 的，表面上看起来不是自己的，但是实际上只有对象<br> 自己通过对象自己设置的方法可以去操作他。外部用户通过对象. prepareWife 是看不<br> 到的。只有自己能看到，就是闭包的私有化的运用。</p>
+<p>上面的 var inherit 与右边 的 var inherit 是一样的意思建议写上面的这种</p>
+<p>上面的 var F 这个 F 形成了闭包，成为了这个函数的私有化变量，而且变成私有化变量就更好</p>
+<p>多人开发，对象命名容易重复，就要解决命名空间的问题<br>右边是命名空间老旧的解决方    ==&gt;<br>用的时候，用下面的写法</p>
+<p>下面是现在公司最常见的方法：用闭包来解决（也可用 webpack），返回方法的调用。<br>init 是初始化，入口函数，入口名字。init 调用了这个函数的功能</p>
+<p>obj.eat().smoke().drink().eat().sleep();</p>
+<p>上面改成下面的写法：用 return this，就可以连续调用和执行了。deng.smoke().drink()</p>
+<p>上面是用 return this 连续调用</p>
+<p>obj.prop    查看就用.XXXX<br>例想要传序号几，就会调用几<br>老旧办法看右边，<br>然后 case1。。。 case2。。。连着往下写这种方法不好，下面的方法更好<br>var obj = { name : “abc” }<br>用方括号来访问属性也是一样的（里面必须是字符串）  这两种基本上完全相同 obj.name    →    obj [ ‘name’ ] 想实现属性名的拼接，只能用方括号的形式</p>
+<p>for in 循环(简化版 for 循环)，目的是便利对象，通过对象属性的个数来控制循环圈数，这个对象有多少属性循环多少圈，而且在每一圈时，都把对象的属性名放到 Prop 里面 在枚举里面，一定要写成 obj[prop]不能加字符串<br>1.hasOwnProperty 2.in<br>3.instanceof<br>枚举也就是遍历：挨个知道信息的过程就叫这个数据组的遍历例</p>
+<p>例</p>
+<p>//上面就是 for in 循环，就是遍历用的。通过对象的属性个数来控制循环圈数，有多少个属性就会循环多少圈。<br>for（var prop in obj）在循环每一圈的时候，他会把对象的属性名放在 prop 里面。想遍历谁就 in 谁，prop 可以写别的，obj 就是我们想要遍历的对象。<br>var XX in XX 的格式是固定的。<br>var 也可以写在外面，写成var key； for（key in obj1）效果是一样的</p>
+<p>写成下面这样会出错</p>
+<p>上面 obj.prop 系统以后我们写的是 obj[‘prop’]，系统会以为我们是在让他访问 prop<br>这个属性，不会把prop 当成一个变量来使用。写成obj[prop]就可以成功访问了。</p>
+<p>写对象时用方括号的形式不容易犯错例<br>右边写法会把原型上面的东西也拿出来</p>
+<p>如果在遍历的时候，我们不想把原型上面的属性拿出来，可以用 hasOwnProperty，<br> 一般与 for in 循环成套出现<br>hasOwnProperty 是一个方法，来判断这个对象是你自己的还是原型的， 任何一个对象里面都有 hasOwnProperty，里面是需要传参的，把属性名传进去（如 prop）。下面达到了如果不是自己的属性，是原型上的属性，就不会返回。</p>
+<p>注明：for in 循环理论上可以返回原型和原型链上的东西，一旦这个原型链延展到了的 object.prototype 上，不会打印系统的，只会打印自带的。<br>var obj = {<br>    proto     : {<br>lasrName：“deng“，<br>    proto     : Object . prototype    //不会打印这个object.prototype</p>
+<p>in 操作符：很少用<br>in 操作符你的也是你的，你父亲的也是你的，只能判断这个对象能不能访问到这个属性，包括原型上；不是判断属性属不属于这个对象的</p>
+<p>判断一个属性属不属于这个对象的只能用 hasOwnProperty<br>instanceof 操作用法类似于 in，但是完全不同<br>A instanceof B 的意思是 A 对象是不是 B 构造函数构造出来的；记住是：看A 对象的原型链上有没有B 的原型<br>解决了<br>例</p>
+<p>判断这个变量是数组还是变量例</p>
+<p>例区别传的变量是数组还是对象的方法：一是 constructor，二是 instanceof</p>
+<p>例    加 Object . prototype.abc = ‘123’;    加个！变成只有不是他的才打印</p>
+<p>第三种区分数组还是对象的方法：想让数组调用他的toString 方法<br>Object . prototype . toString . call ( [ ] ) ;    //[]会替换 this<br>Object . prototype . toString = function ( ) {<br>识别 this（谁调的他，这个this 就是谁） 返回相应的结果</p>
+<p>}<br>obj . toString ( ) ;</p>
+<p>例：下面这段 js 代码执行完毕后x，y，z 的值分别是多少？<br>var x = 1, y = z = 0; function add(n){<br>return n = n + 1;</p>
+<p>进制<br>十六进制 0 1 2 3 4 5 6 7 8 9 a b c d e f<br>十六进制的中 10 是十进制的 16，    1f = 16 + 15<br>二进制中的 10 是十进制的 2，11 是十进制的 3</p>
+<p>}<br>y = add(x); function add(n){<br>return n = n + 3;</p>
+<p>}<br>z = add (x);<br>答案 1，4，4，同一个函数，后面会覆盖前面的，fn add 会提升到前面例：下面代码中 console.log 的结果是[1, 2, 3, 4, 5]的选项是：<br>A、function foo (x){<br>console.log(arguments) return x<br>}<br>foo(1, 2, 3, 4, 5)<br>B 、 function foo (x){ console.log(arguments)<br>return x<br>} (1, 2, 3, 4, 5)<br>C 、 ( function foo (x){ console.log(arguments)<br>return x<br>})(1, 2, 3, 4, 5)<br>D、function foo(){bar .apply (null, arguments);} function bar (x) {console.log(arguments);}<br>foo(1, 2, 3, 4, 5);<br>答案 A, C,D    其中b 执行不了,但是不报错<br>bar 里面传了一下参数。bar .apply (null, arguments);写成 bar (arguments);<br>例：一行文本，水平垂直居中<br>答案：height = line height    text-align:center<br>例：请问以下表达式的结果是什么？<br>parseInt(3, 8)        parseInt(3, 2)        parseInt(3, 0) A.3，3，3    B.3，3， NaN    C.3， NaN， NaN    D.other 答案 C 或D（有的浏览器 0 进制报错，有的不报错）</p>
+<p>例：以下哪些是JavaScript 语言 typeof 可能返回的结果<br>A.string    B.array    C.object    D.null<br>例：JavaScript 的 call 和 apply 方法是做什么的，两者有什么区别？ 例：看看下面 alert 的结果是什么？<br>function b (x, y, a){ arguments [ 2 ] = 10; alert( a );<br>}<br>b(1, 2, 3);<br>如果函数体改成下面，结果又会是什么？<br>a = 10;<br>alert(arguments[2]);<br>答案两个都是 10<br>逗号操作符，这种情况，会看一眼 1，在看一眼 2，然后返回第二个，就是 2<br>例：</p>
+<p>答案是 number</p>
+<p>例    前面的 var this = Object.creat(test.prototype);是最标准的写法<br>new tes（t   ）；就会让 var this = Object.creat(test.prototype);如果不 new，this 指向 window</p>
+<p>用括号把 function f （）{}转换成表达式，就被立即执行了，就找不到了。<br>因为 function f （）{}肯定是 true，所以会执行{}，但 typeof f 中的 f 已经找不到了<br>答案是 1undefined<br>下面是用友的题目<br>例：以下哪些表达式的结果为 true（    ）<br>A.undefined == null    B.undefined === null    C.isNaN(“100”)    D.parseInt(“la”) ==1<br>答案 A、C、D    //isNaN（”100”）意思是这个数经过 number 转换后是不是 NaN<br>C</p>
+<p>parseInt（“1a”）==1。    引用值比的是地址</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2020/03/10/js-basics-5-inherit/" data-id="ck7m1x4nz0000p4u1ambkaan5" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-js-basics-4-object" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/blog/2020/03/10/js-basics-4-object/" class="article-date">
@@ -563,6 +651,10 @@ var a; 这个叫变量声明。我们向系统中申请了 var 这个框，命�
       <ul>
         
           <li>
+            <a href="/blog/2020/03/10/js-basics-5-inherit/">js-basics-5-inherit</a>
+          </li>
+        
+          <li>
             <a href="/blog/2020/03/10/js-basics-4-object/">js-basics-4-object</a>
           </li>
         
@@ -576,10 +668,6 @@ var a; 这个叫变量声明。我们向系统中申请了 var 这个框，命�
         
           <li>
             <a href="/blog/2020/03/10/js-basics-1-type/">js-basics-1-type</a>
-          </li>
-        
-          <li>
-            <a href="/blog/2020/03/07/firstblog/">firstblog</a>
           </li>
         
       </ul>
