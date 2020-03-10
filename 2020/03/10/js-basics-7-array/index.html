@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>js-basics-7-array | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="数组 重点：数组常用方法，系统内部负数兼容问题，类数组，数组去重问题 一、数组的定义(来源于Array.prototype)1）new Array(length&#x2F;content);    var arr &#x3D; new Array(1,2,3,4,5 ); 2）字面量    var arr &#x3D; [1,2,3,4,5];二、数组的读和写arr [ num ]        &#x2F;&#x2F;不可以溢出读，结果 und">
+<meta property="og:type" content="article">
+<meta property="og:title" content="js-basics-7-array">
+<meta property="og:url" content="http://yoursite.com/2020/03/10/js-basics-7-array/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="数组 重点：数组常用方法，系统内部负数兼容问题，类数组，数组去重问题 一、数组的定义(来源于Array.prototype)1）new Array(length&#x2F;content);    var arr &#x3D; new Array(1,2,3,4,5 ); 2）字面量    var arr &#x3D; [1,2,3,4,5];二、数组的读和写arr [ num ]        &#x2F;&#x2F;不可以溢出读，结果 und">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-03-10T15:40:36.000Z">
+<meta property="article:modified_time" content="2020-03-10T15:43:46.157Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/blog/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/blog/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/blog/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/blog/">Home</a>
+        
+          <a class="main-nav-link" href="/blog/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/blog/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-js-basics-7-array" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2020/03/10/js-basics-7-array/" class="article-date">
+  <time datetime="2020-03-10T15:40:36.000Z" itemprop="datePublished">2020-03-10</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      js-basics-7-array
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>数组</p>
+<p>重点：数组常用方法，系统内部负数兼容问题，类数组，数组去重问题</p>
+<p>一、数组的定义(来源于Array.prototype)<br>1）new Array(length/content);    var arr = new Array(1,2,3,4,5 ); 2）字面量    var arr = [1,2,3,4,5];<br>二、数组的读和写<br>arr [ num ]        //不可以溢出读，结果 undefined arr[num] = XXX;    //不可以溢出读<br>arr[num] = xxx;    //可以溢出写<br>es3.0 最标准最基础    es5.0    es6.0，最新的 es7.0 还没有普及，今天讲的都是 es3.0<br>对象的定义方式 1 字面量.2 构造函数,3 自定义构造函数 4object.create<br>数组是一种特殊的对象，在本质上两者没有太大的区别<br>例可以写 var arr = [,]    //稀松数组，相当于定了两个位置，conlogo 结果是undefined</p>
+<p> 封装 type 方法<br>定义对象方式：自变量，构造函数，自定义的构造函数，Object.create<br>定义数组的方式：var arr = [ ] ;数组自变量；var arr = new Array ( ) ;系统提供。两者区别就只一位数的情况<br>数组能用的方法来源于Array.prototype<br>例 var arr = [ ] ;<br>如果写 var arr = [ 1, ,1]，出来就是 1，undefined*1，1<br>数组不是每一位都有值，稀疏数组例 var arr = new Array ( ) ;<br>var arr = new Array(1,2,3,4,5);跟上面效果一样</p>
+<p>例 var arr = [ ];和 var arr = new Array( );唯一的区别是在 var arr = new Array( );只传了一个参数的情况下，会被当成长度，并且成为一个稀松数组</p>
+<p>如传进去的参数是一个小数，就非法例</p>
+<p>数组常用的方法一、改变原数组（在原来数组基础上去改变） 1）reverse,sort,push,pop, unshift, shift,<br>2）splice</p>
+<p>例 unshift 是从第一位加东西</p>
+<p>forEach filter map reduce reduceRight slice concat,join—&gt;split,toString<br>在控制台操作<br>例 push 是在数组的最后一位添加数据，可以添加一个，也可以添加很多个</p>
+<p>例说明能重写</p>
+<p>例数组有三位，想在数组最后一位添加东西<br>var arr = [ 1, 2, 3 ];如果在第四位加东西写成arr = [3]。    //length-1 位添加东西<br>例</p>
+<p>Array . prototype.push = function ( ){    //不能写形参<br>例 pop 是剪切方法（把最后一位数剪切出去）。在 pop( )括号里面不能传参，写了会忽略</p>
+<p>例数组不能从-1 位插入东西</p>
+<p>可以用两个数组拼接成一个数组的方式添加东西例 reverse 逆反</p>
+<p>例 splice 一种剪切，切片<br>// 这是从第零位到第五位<br>/arr.splice(从第几位开始，截取多少长度，传参在切口处添加新的数据)<br>arr.splice(1,2);    //从第 1 位开始截取 2 位，传参可以不填<br>截取的是[1,2]</p>
+<p>例 arr.splice(1,1,0,0,0);<br>//意思是从第 1 位起截取 1 位，然后加上 0,0,0 这三个数<br>例 var arr = [1,2,3,5];    //1 是第 0 位，2 是第一位，3 是第二位，5 是第三位<br>arr.splice(3,0,4);<br>变成 arr    ==&gt;    1,2,3,4,5<br>例 var arr = [ 1,2,3,4 ];<br>arr.splice(-1,1);<br>//这里的-1 是倒数第一位<br>数组一般的方法都可以带负数</p>
+<p>例下面是系统内部解决负数的问题的兼容</p>
+<p>思维方式：上面就控制了升序<br>这个函数第一次调动时，会把数组的第一位和第二位传进来，也就是a=1，b=3，然后通过规则比较，当你把返回值返回为正，为负，为 0。<br>传参的顺序（但是这个顺序是位子的顺序，不是按数字比），第一次是 1,3，第二次 1,5,第三次 1,4,第四次 1,10，第五次 3,5,第六次 3,4,第七次 3,10，第八次 5,4，第九次<br>5,10，第十次 4,10；依次传参（符合冒号排序的算法） 是以换位置的方式改变顺序<br>例 var arr = [ 2,13,19,4];<br>//到 13 这一位时，换位置变成了[ 2,4,19,13]<br>例下面这种方式变成了降序</p>
+<p>例 sort 给数组排序（按照从小到大），改变原数组</p>
+<p>在 sort 后面加 reverse 就是降序例下面这个是按 asc 码排序的</p>
+<p>所以给我们留了个接口，如下图<br>sort<br>1 必须写两形参 2 看返回值 return<br>1）当返回值为负数时，那么前面的数放在前面，<br>2）当返回值为正数时，那么后面的数在前，<br>3）为 0，不动<br>右边的<br>return 1;    //此处的 1 代表返回正的<br>return -1;    //此处的-1 代表返回负的</p>
+<p>记住升序 return a –  b ;    降 序 return b – a ;<br>直接调用 arr.sort( )比的是 asc 码，要在里面填函数才可以</p>
+<p>例给一个有序的数组，乱序。当我们没规律可以遵循的时候，返回的是随机的</p>
+<p>// Math.random() 会生成一个 0 到 1（包括 0，但是不包括 1）的随机数<br>例给他们三个按照年龄升序</p>
+<p>可以把右上改成简化版</p>
+<p>例按字符串长度排序</p>
+<p>例按字节长度排序</p>
+<p>下面略微修改一下    </p>
+<p>例 concat 连接， 把后面的数组拼到前面，并成立一个新的数组，不影响之前的两个数组。不能改变原数组</p>
+<p>例 toString 是把数组当做字符串展示出来</p>
+<p>例 slice 从该位开始截取，截取到该位，并不改变原数组，这里也可以写负数</p>
+<p>把下面字符串拼到一起下，字符串是在栈内存里面的，先进后出</p>
+<p>用下面这种方式更好，join 里面不传参默认用逗号连接，传空串</p>
+<p>slice 并不改变原数组 slice 完了以后需要有东西接收，不然没有意义</p>
+<p>1、可以利用属性名模拟数组的特性2、可以动态的增长length 属性</p>
+<p>类数组</p>
+<p>slice 里面可以填 0 个参数，也可以填 1 个参数，也可以填两个参数<br>1、如果填两个参数，slice（从该位开始截取，截取到该位） 如 arr.slice(1,2)从第一位开始截取，截取到第二位<br>2、如果填一个参数，从第几位开始截取，一直截取到最后。如果 arr.slice(1) ，从第 1 位开始截取，截取到最后一位<br>3、不写参数就是整个截取数组（把类数组转换成数组的时候经常使用到）<br>例  join 括号里面需要用字符串形式（标准语法规定），就会用加的东西连接起数组</p>
+<p>例 join 可逆的东西：split( )是 string 字符串方法</p>
+<p>split 按照什么拆分为数组。用什么拆，什么就没了，按-拆就去掉-，按 4 拆就去掉 4。<br>split 可以返回数组，数组可以返回字符串</p>
+<p>3、如果强行让类数组调用push 方法，则会根据 length 属性值的位置进行属性的扩充。<br>例这个看着像数组，但是数组有的方法，他全部都没有，所以他是类数组</p>
+<p>类数组长得像数组，但是没有数组所拥有的的方法。例</p>
+<p>例下面是类数组的基本形态</p>
+<p>关键点在 length 上面，根据 length 改变而改变，走一下length，即： Array.prototype.push = function (target){<br>this[obj.length] = target; this.length ++;<br>}</p>
+<p>在控制台 push(‘d’)以后，obj 的object 多了一个 3：d，长度也变成了 4<br> 类数组    。<br>例：如果给一个对象加上 splice 方法，那么这个对象就长得像数组了。但他仍然<br> 象，但是可以当做数组来用，需要自己添方法。（如下图）</p>
+<p>如果对象 obj 调用这个方法，那么this 变成了obj</p>
+<p>答案：“1”：“a”，“2”：“c”，“3”：“b”，“length”：4</p>
+<p>作业 1、封装 type 方法</p>
+<p>作业答案：<br>1、封装 type（这个方法是一个工具类方法，可以存在库里面），区分 typeof 方法<br>1）先分类，原始值，引用值<br>2）区分引用值，先判断是不是 null<br>数组，对象，包装类(new number )会返回object，通过 Object.prototype.toString</p>
+<p>简化写法–进一步简化</p>
+<p>2、数组去重（利用对象的特性做数组去重，去重就是去掉重复）<br>思路：写一个对象，把数组的每一位当做对象的属性名。利用对象的特性（同一属性名不可以出现两次），先把第一位当做属性名添加进去，属性值随便写个，再看第二位，如果第二位在对象里面有属性名，就看下一位，如果对象里面没有属性名， 就把这个值添加进去当属性名。只看对象的属性名，就去重了，这个方法叫hash。</p>
+<p>每一圈循环都要this.length; 写成 var len = this.length;这样直接放值能少一些运算。[this[i]]代表数组的第几位。“abc”可以随便填值（要求是字符串，但是不为 false），但是填[this[i]]= [this[i]];在数组有 0 的时候就会有 bug。<br>if 里面取到值什么都不敢，取到 undefined 才开始操作，所以写非！，没有值，才处理</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2020/03/10/js-basics-7-array/" data-id="ck7m2e4pp00000wu1d3idflwp" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/blog/2020/03/10/js-basics-6-this/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">js-basics-6-this</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2020/03/">March 2020</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/blog/2020/03/10/js-basics-7-array/">js-basics-7-array</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2020/03/10/js-basics-6-this/">js-basics-6-this</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2020/03/10/js-basics-5-inherit/">js-basics-5-inherit</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2020/03/10/js-basics-4-object/">js-basics-4-object</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2020/03/10/js-basics-3-closure/">js-basics-3-closure</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/blog/" class="mobile-nav-link">Home</a>
+  
+    <a href="/blog/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/blog/fancybox/jquery.fancybox.css">
+
+  
+<script src="/blog/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/blog/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>
