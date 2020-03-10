@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>js-basics-3-closure | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="闭包（closure） eg: Person();四、模块化开发，防止污染全局变量立即执行函数 例(function (){    &#x2F;&#x2F;写成(function abc(){}())也调用不到var a &#x3D; 123; var b &#x3D; 234;console.log(a + b);}())例 (function (a, b, c){ console.log(a + b + c * 2);}(1, 2,">
+<meta property="og:type" content="article">
+<meta property="og:title" content="js-basics-3-closure">
+<meta property="og:url" content="http://yoursite.com/2020/03/10/js-basics-3-closure/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="闭包（closure） eg: Person();四、模块化开发，防止污染全局变量立即执行函数 例(function (){    &#x2F;&#x2F;写成(function abc(){}())也调用不到var a &#x3D; 123; var b &#x3D; 234;console.log(a + b);}())例 (function (a, b, c){ console.log(a + b + c * 2);}(1, 2,">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-03-10T15:14:54.000Z">
+<meta property="article:modified_time" content="2020-03-10T15:15:59.030Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/blog/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/blog/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/blog/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/blog/">Home</a>
+        
+          <a class="main-nav-link" href="/blog/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/blog/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-js-basics-3-closure" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2020/03/10/js-basics-3-closure/" class="article-date">
+  <time datetime="2020-03-10T15:14:54.000Z" itemprop="datePublished">2020-03-10</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      js-basics-3-closure
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>闭包（closure）</p>
+<p>eg: Person();<br>四、模块化开发，防止污染全局变量<br>立即执行函数</p>
+<p>例(function (){    //写成(function abc(){}())也调用不到<br>var a = 123; var b = 234;<br>console.log(a + b);<br>}())<br>例 (function (a, b, c){ console.log(a + b + c * 2);<br>}(1, 2, 3))这一行里面的(1,2,3)是实参例 var num = (function (a, b, c){<br>var d = a + b + c * 2 – 2; return d;<br>}(1, 2, 3))<br>答案 num = 7</p>
+<p>}<br>答案这也是函数声明例 function (){<br>var a = 123;<br>}<br>test();<br>答案 test()；就是表达式，所以能执行<br>。    例 var test = function (){<br>console.log(‘a’);<br>}()<br>答案这是表达式，可以被执行，此时在控制台执行 test 的结果是 undefined，这个函数的名字就会被放弃<br>例+ function test(){<br>console.log(‘a’);<br>}()<br>答案加了个“正“，在趋势上要把他转换成数字，就是表达式了，既然是表达式就能被执行，就会放弃名字，此时console.log (test)，就会报错；这就是立即执行函数同样放了正号，负号，！就会放弃函数名字，转换成表达式；但是*和/不行，&amp;&amp;||前面放东西也行<br>例 var test = function (){}<br>其中= function (){}把 function 赋到 test 里面去叫表达式，var test 是声明<br>在执行时，会放弃这个函数，储存到 test 里面储存引用，让这个 test 恢复到被声明的<br>状态</p>
+<p>例(function test(){console.log(‘a’);})()<br>这个被()包起来的 function 函数声明变表达式了，就能被外面的最后的()执行例(function test(){console.log(‘a’);} ())<br>最外面的大括号是数学运算符号，是最先被执行，其余的括号都是有语法意义的， 就把函数变表达式了<br>()也是数学执行符，能打印 a，但是执行 test 就报错，所以干脆就不写 test<br>例 function test (a, b, c, d){<br>console.log(a + b + c + d);<br>}(1, 2, 3, 4);    //写成(1)也是这种效果<br>理论上不能执行，只写()就会被当成执行符，但是(1, 2, 3, 4);这样写暂时不会当成运算符，没意义，但是不会执行，也不报错。还能调用 test<br>例先定义一个 10 位数的数组，就是在var arr = [function () {console.log(i);}有十个]并且把数组返回<br>function test (){    //定义个函数 test var arr = [];        //定义一个空数组<br>for (var i = 0; i &lt; 10; i ++){<br>//丰满空数组，让空数组添加十条数组， 每一条都是一个 function(){}<br>arr[i] = function () { //随着 for 循环 i 变， 数组 i 也变，arr 每一次都等于一个全新的函数体<br>document.write(i + “ ”);<br>}<br>}<br>return arr;    //把 arr 返回到外部<br>}<br>var myArr = test();<br>for (var j = 0; j &lt; 10; j ++){ //分别执行十个函数体，函数体里面定义了 document.write myArr<a href="">j</a>;<br>}<br>答案 10 10 10 10 10 10 10 10 10 10<br>第二个 for 是为了打印这个数组，麻烦写法myArr<a href="">0</a>; myArr<a href="">1</a>; 。。。myArr<a href="">9</a>; 过程 for (var i = 0; i &lt; 10; i ++){}执行了十次，产生了十个彼此独立的函数。并且把这十个函数放在数组里面去，还把数组返回了，这十个函数和 test 一起产生了一个闭包。<br>既然是闭包，那么访问 test 里面的变量时，实际上访问的是同一套，而 test 产生了<br>arr 和 i 变量（写在 for 循环里面的 i 变量），而这十个函数在外边要访问 i 变量，其实<br>访问的是同一个 i。</p>
+<p>什么时候访问的？在test 执行完以后，在下面 for(j)访问的<br>第一个 i=0，转到 9 的时候，i ++变 10 终止 for 循环，结束的时候i=10，结束之后把return arr 返回，arr；<br>这十个函数都是为了打印 i 的，在外部访问 i 的时候i=10，所以打印的是 10<br>arr[i] = function () {<br>document.write( i + “ ”);<br>}<br>理解过程：在这个函数体中，当arr[0] 时，document.write(i)的 i 是不变的，还是 i， 等函数保存到外部之后，等执行的时候，才会去找i 的值。<br>这个赋值语句中，arr[0] =  函数;把一个函数体或者说是一个函数引用赋给数组的当前位，数组的当前位需要马上被索取出来的（数组现在是当前第几位，我们是知道的， 因为这个是执行语句），当 for(var i = 0)时，arr[i]会变成 arr[0]，但是这个 i 跟函数体里面的 d.w(i+“”）里面的 i 是没有关系的，因为函数体 function(){}不是现在执行，不会在意函数里面写的是什么，不是现在执行那么里面的 document.write 不会变成现实的值，不是现在执行就是函数引用（函数引用就是被折叠起来的，系统不知道里 面写的是什么）<br>在执行 myArr<a href="">j</a>;的时候，系统才会读 document.write(i +””)里面的语句在定义函数的时候是不看里面的，在执行的时候才看<br>例我们让上面这个变成打印 0,1,2,3,4,5,6,7,8,9，用立即执行函数解决<br>function test (){<br>var arr = [];<br>for (var i = 0; i &lt; 10; i ++){ (function (j) {<br>arr[j] = function () { document.write( j + “ ”);<br>}<br>}(i));<br>return arr;<br>}<br>var myArr = test();<br>for (var j = 0; j &lt; 10; j ++){ myArr<a href="">j</a>;<br>}<br>理解过程：相当于在 for 循环里面有十个立即执行函数 function(j){}<br>在第一圈 i 是 0，j 也是 0，function(){document.write( j + “ ”)}拿着 j=0，进行循环的第二圈 i 是 1，又有了一个新的j 是 1，反复循环<br>形成了十个立即执行函数，有十个 j 对应</p>
+<p>例 for(var i = 0; i &lt; 10; i ++){ console.log(i);<br>}<br>答案 0,1,2,3,4,5,6,7,8,9<br>例 for(var i = 0; i &lt; 10; i ++){<br>(function(){<br>}())<br>}<br>中间 function 这个会执行 10 次</p>
+<p>=“”等号后面的引号里面需要有值才可以    删除必须借助 delete mrDeng.sex</p>
+<p>一定要注意——闭包的防范</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2020/03/10/js-basics-3-closure/" data-id="ck7m1eexv0000uou1cdgsfsfv" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/blog/2020/03/10/js-basics-2-precompile/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">js-basics-2-precompile</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2020/03/">March 2020</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/blog/2020/03/10/js-basics-3-closure/">js-basics-3-closure</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2020/03/10/js-basics-2-precompile/">js-basics-2-precompile</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2020/03/10/js-basics-1-type/">js-basics-1-type</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2020/03/07/firstblog/">firstblog</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2020/03/07/hello-world/">Hello World</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/blog/" class="mobile-nav-link">Home</a>
+  
+    <a href="/blog/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/blog/fancybox/jquery.fancybox.css">
+
+  
+<script src="/blog/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/blog/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>
