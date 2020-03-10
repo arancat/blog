@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>js-basics-2-precompile | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="js 运行三部曲（主要探讨预编译） 1 语法分析 → 2 预编译 → 3 解释执行预编译前奏例 function test(){ console.log(‘a’);}test();上面能执行例 test();function test(){ console.log(‘a’);}也能执行，因为有预编译的存在例 var a &#x3D; 123;console.log(a);答案 123例 console.lo">
+<meta property="og:type" content="article">
+<meta property="og:title" content="js-basics-2-precompile">
+<meta property="og:url" content="http://yoursite.com/2020/03/10/js-basics-2-precompile/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="js 运行三部曲（主要探讨预编译） 1 语法分析 → 2 预编译 → 3 解释执行预编译前奏例 function test(){ console.log(‘a’);}test();上面能执行例 test();function test(){ console.log(‘a’);}也能执行，因为有预编译的存在例 var a &#x3D; 123;console.log(a);答案 123例 console.lo">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-03-10T15:09:38.000Z">
+<meta property="article:modified_time" content="2020-03-10T15:12:45.909Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/blog/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/blog/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/blog/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/blog/">Home</a>
+        
+          <a class="main-nav-link" href="/blog/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/blog/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-js-basics-2-precompile" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2020/03/10/js-basics-2-precompile/" class="article-date">
+  <time datetime="2020-03-10T15:09:38.000Z" itemprop="datePublished">2020-03-10</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      js-basics-2-precompile
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>js 运行三部曲（主要探讨预编译）</p>
+<p>1 语法分析 → 2 预编译 → 3 解释执行<br>预编译前奏<br>例 function test(){ console.log(‘a’);<br>}<br>test();<br>上面能执行例 test();<br>function test(){ console.log(‘a’);<br>}<br>也能执行，因为有预编译的存在例 var a = 123;<br>console.log(a);<br>答案 123<br>例 console.log(a);<br>var a = 123;</p>
+<p>答案 undefined<br>例只写 console.log(a);就会报错<br>函数声明整体提升：函数不管写到哪里，都会被提到逻辑的最前面。所以不管在哪里调用，本质上都是在后面调用<br>变量    声明提升：把 var a 提升到最前面<br>var a = 123;这是变量声明再赋值。<br>变量    声明提升是把他拆分成var a; a = 123;然后把 var a 提升到最前面上面这两句话没办法解决下面例子的问题<br>例 function a(a){<br>var a = 234;<br>var a = function(){<br>} a();<br>}<br>var a =123;<br>1.imply global 暗示全局变量：即任何变量，如果变量未经声明就赋值，此变量就为全局对象(就是window)所有。<br>全局对象是window<br>例 window.a = 10;<br>例 a = 10; ===&gt; windows.a = 10;<br>eg: var a = b = 123;<br>2.一切声明的全局变量，全是window 的属性。<br>例 var a = 123; ===&gt; window.a = 123;<br>window 就是全局的域<br>如果在全局变量在var a = 123；那么就会返回到 window<br>例 var a = 123<br>console.log(a) ===&gt; window.a<br>例 var a = b = 234;是把 234 的值赋给b，在把b 的值赋给 a<br>例 function test(){<br>var a = b = 123;<br>}<br>test()<br>写 test()代表执行 test，赋值是自右向左的，上面先把 123 赋给 b 的时候，b 未经声明，然后再声明 a，再 b 的值赋给 a，导致b 未经声明，所以b 归 window 所有<br>访问 window.a 是 undefined，访问 window.b 是 123<br>例 function test(){<br>var b = 123;</p>
+<p>}<br>test(); console.log(window.b);<br>答案 undefined<br>window 就是全局例 var a = 123;<br>console.log(a);    → console.log(window.a);<br>例 var a = 123;<br>var b = 234; var c = 345; window{<br>a : 123,<br>b : 234,<br>c : 345<br>}<br>如果 var a 对应会有 window.a<br>预编译（解决执行顺序问题）<br>例 function fn(a){<br>console.log(a); var a = 123; console.log(a); function a (){} console.log(a);<br>var b = function (){} console.log(b); function d() {}<br>}<br>fn(1);<br>答案是 function a(){}//123//123//function    (){}<br>这个例子的形参是（a），变量声明也是 a<br>上面的例子按四部曲变化如下:<br>找形参和变量声明，将变量和形参（a）名作为AO 属性名，值为 undefined ，AO{<br>a : undefined, b : undefined,<br>}<br>（把实参值传到形参里）AO{ a : 1,</p>
+<p>b : undefined,<br>}<br>function a () {}和 function d () {}都是函数声明，但是var b = function (){}不是。AO{ a : function a () {},<br>b : undefined,<br>d : function d () {}<br>}<br>执行第一行 console.log(a);时，用的是 AO{ a : function a () {},<br>b : undefined,<br>d : function d () {}<br>}<br>执行 var a =123;改变的是AO{ a : 123,<br>b : undefined,<br>d : function d () {}<br>}<br>在 b = function (){}时 AO{ a : 123,<br>b : function () {},<br>d : function d () {}<br>}<br>预编译发生在函数执行的前一刻<br>（函数）预编译的四部曲：<br>1.创建 AO 对象 Activation Object(执行期上下文，作用是理解的作用域，函数产生的执行空间库)<br>2.找形参和变量声明，将变量和形参名作为AO 属性名，值为undefined 相当于 AO{<br>     a : undefined, b : undefined<br>}<br>3.将实参值和形参统一（把实参值传到形参里）<br>4.在函数体里面找函数声明，值赋予函数体<br>（先看自己的AO，再看全局的 GO）<br>例子 function test (a, b){<br>console.log(a);<br>c = 0;</p>
+<p>var c; a = 3;<br>b = 2;<br>console.log(b); function b (){};<br>function d (){}; console.log(b);<br>}<br>test(1);<br>答题过程：找形参和变量声明，将变量和形参名作为 AO 属性名，值为 undefined, AO{ a : 1,<br>b : undefined, c : undefined<br>}<br>函数声明 function b(){}和 function d(){}，AO{ a : 1,<br>b : function b(){}, c : undefined,<br>d : function d(){}<br>}<br>执行 console.log(a);答案是 1<br>执行 c = 0;变AO{<br>a : 1,<br>b : function b(){}, c : 0,<br>d : function d(){}<br>}<br>var c 不用管，因为 c 已经在 AO 里面了执行 a = 3;改AO{<br>a : 3,<br>b : function b(){}, c : 0,<br>d : function d(){}<br>}<br>执行 b = 2;改AO{ a : 3,<br>b : 2,</p>
+<p>c : 0,<br>d : function d(){}<br>}<br>执行 console.log(b);答案是 2<br>function b () {}和 function d(){}已经提过了，不用管执行 console.log(b);答案是 2<br>例 function test(a , b){<br>console.log(a); console.log(b); var b = 234; console.log(b); a = 123;<br>console.log(a); function a (){} var a;<br>b = 234;<br>var b = function(){} console.log(a); console.log(b);<br>}<br>test(1);</p>
+<p>答题过程： 将变量和形参名作为 AO 属性名，AO{ a : undefined,<br>b : undefined<br>}<br>将实参值和形参统一，AO{ a : 1,<br>b : undefined<br>}<br>找函数声明 function a (){}，AO{ a : function a (){},<br>b : undefined<br>}<br>执行 console.log(a);答案是 function a (){}<br>执行 console.log(b);答案是 undefined</p>
+<p>执行 var b = 234;变 AO{ a : function a (){},<br>b : 234<br>}<br>执行 console.log(b);答案是 234<br>执行 a = 123;变AO{<br>a : 123,<br>b : 234<br>}<br>执行 console.log(a);答案是 123<br>然后 function a (){};var a ;都可以不看了执行 b = 234，b 值还是 234，不变<br>执行 var b = function (){}，变 AO{<br>a : 123,<br>b : function (){}<br>}<br>执行 console.log(a);答案是 123<br>执行 console.log(b);答案是 function (){}<br>下面开始讲全局的预编译<br>例 console.log(a);<br>var a = 123;<br>答案 undefined<br>例 console.log(a);<br>var a = 123; function a (){}<br>答案是打印 a 是 function a (){}<br>全局的预编译三部曲：<br>1、生成了一个 GO 的对象 Global Object（window 就是 GO）<br>2、找形参和变量声明，将变量和形参名作为GO 属性名，值为 undefined<br>3、在函数体里面找函数声明，值赋予函数体<br>例 console.log(a);<br>var a = 123; function a (){}<br>答案过程，GO{<br>a : undefined<br>}<br>函数声明GO{</p>
+<p>a : function a (){}<br>}<br>执行 var a = 123;变 GO{ a : 123<br>}<br>执行 console.log(a);就是 123<br>GO === window， GO 和window 是一个东西<br>console.log(a);和 console.log(window.a);和 console.log(go.a);是一样<br>任何全局变量都是window 上的属性<br>没有声明就是赋值了，归window 所有，就是在 GO 里面预编译<br>例 function test(){<br>var a = b =123; console.log(window.b);<br>}<br>test();<br>答案 a 是 undefined，b 是 123<br>先生成 GO{<br>b : 123<br>}<br>再有AO{<br>a : undefined<br>}<br>先生成 GO 还是AO?<br>想执行全局，先生成 GO，在执行 test 的前一刻生成AO<br>在几层嵌套关系，近的优先，从近的到远的，有 AO 就看AO，AO 没有才看 GO<br>例 console.log(test);<br>function test(test){ console.log(test); var test = 234; console.log(test); function test(){<br>}<br>}<br>test(1);<br>var test = 123;<br>答题过程:想执行全局,先有 GO,GO{ test : undefined</p>
+<p>}<br>发现有函数声明 GO{ test : function (){<br>…..<br>}<br>}<br>执 行 console.log(test)， 执行 test(1)之前生成 AO{<br>test : function (){}<br>}<br>执行 var test = 234;变成 234<br>AO 上面有就用 AO 的，没有就看 GO 的例 var global = 100;<br>function fn(){ console.log(global);</p>
+<p>答 题 过 程 ，GO{ global : undefined<br>fn : undefined(没用可以不写)<br>}<br>变 GO{<br>global : 100 fn : undefined<br>}<br>执行 fn()之前，AO{ global : undefined<br>}<br>执行结果是 undefined，200<br>例</p>
+<p>}<br>fn();<br>答题过程GO{<br>global : undefined, fn : function(){.    }</p>
+<p>}<br>执行 var global = 100;变GO{ global : 100,<br>fn : function(){.    }<br>}<br>不看 function fn(){. }里面的东西<br>执行 fn()之前 AO{<br>访问 GO 的 global</p>
+<p>答案//undefined    //undefined<br>过程GO{<br>a : undefined<br>test:undefined(没用可以不写)<br>}<br>AO{</p>
+<p>//234    //234</p>
+<p>}    b : undefined    //不管 if（a）{}，可以提出 var b 的 b<br>例    }<br>执行到 c=234，GO{<br>a : undefined c : 234<br>}<br>执行到 a=10，GO{ a : 10<br>c : 234}</p>
+<p>例 function bar(){<br>return foo; foo = 10;<br>function foo(){} var foo = 11;<br>}<br>console.log(bar());<br>答案：function foo(){}<br>如果在第一行 return foo，下面有 foo 这个函数，一定打印这个函数例 console.log(bar());<br>function bar(){ foo = 10; function foo(){} var foo = 11; returm foo;<br>}<br>答案 11<br>例 console.log(b);<br>var b = function (){}<br>答案是 undefined<br>例现在在 if 里面定义函数声明 function 是不允许的，但是过去可以，下面就是过去的旧题，按可以来做</p>
+<p>GO{<br>a : undefined<br>}<br>GO{<br>a : undefined<br>demo : function (){}<br>}<br>开始执行 a=100，GO{ a : 100<br>demo : function (){}<br>}<br>AO{<br>e : undefined, b : undefined, c : undefined, a : undefined<br>}<br>形参实参相统一，AO{ e : 1,<br>b : undefined, c : undefined, a : undefined<br>}<br>赋值AO{<br>e : function e (){}, b : undefined,<br>c : undefined,    旧规则里面可以提出 function(){}<br>a : undefined</p>
+<p>}<br>执行 arguments[0] = 2;实参列表和传参是否相映射，变 AO{ e : 2,<br>b : undefined, c : undefined, a : undefined<br>}<br>执行 console.log(e);答案 2<br>if(a)由于 a 在 AO 里面是 undefined，所以不走 if</p>
+<p>执行 a = 10;变AO{ e : 2,<br>b : undefined, c : undefined, a : 10<br>}<br>执行 console.log(b)，答案 undefined<br>执行 f = 123，变 GO{<br>a : 100,<br>demo : function (){}, f : 123<br>}<br>执行 console.log(c);    之前打印 function(){}，改语法后打印 undefined<br>执行 console.log(a);    答案 10<br>执行 console.log(a);    因为在外面是全局的，答案 100<br>执行 console.log(a);    答案 123<br>例</p>
+<p>答题//1    false+1 因为有+，两边都不是字符串，就转换成数字，false 是 0<br>//false    false==1，false 肯定不等于 1，所以把 false 再赋给 demo<br>//undefined<br>typeof(a) 出 现”undefined”    -true 转换成数字是-1    +undefined 显示“NaN”<br>-1 + NaN = NaN<br>-1 + NaN + “” = “NaN”<br>“undefined” &amp;&amp; “NaN”转换成 boolean，就都是true<br>“11”* 2 是<em>把两边转换成了数字，所以 11 +“11”</em> 2 =33，33 == 33，两边相等<br>!!非非就是正<br>“ ”这不是空串，是空格字符串<br>!!” ”转换成 Boolean 为 true<br>!!””非非空串，转换为 Boolean 为 false</p>
+<p>!!false 就是 false<br>true + false - false = 1 + 0 – 0 =1<br>11|| document.write(‘你觉得能打印？’)<br>||遇到真就听，1 为真，所以返回 1<br>例(window.foo || (window.foo = ‘bar’));求 window.foo<br>答案”bar”<br>这道题要先看(window.foo = ‘bar’)这一边的，再看左边的 window.foo，因为运算符的顺序；但是这道题错误的读法（从左到右）也是 bar<br>(window.foo || window.foo = ‘bar’);这么写就报错；||或运算符优先级高于=等号<br>作用域精解<br>[[scope]]:每个 javascript 函数都是一个对象，对象中有些属性我们可以访问，但有些不可以，这些属性仅供 javascript 引擎存取，[[scope]]就是其中一个。[[scope]]指的就是我们所说的作用域,其中存储了运行期上下文的集合。<br> 作用域链：[[scope]]中所存储的执行期上下文对象的集合，这个集合呈链式链接，我们把这种链式链接叫做作用域链。<br> 运行期上下文:当函数在执行的前一刻，会创建一个称为执行期上下文的内部对象。一个执行期上下文定义了一个函数执行时的环境，函数每次执行时对应的执行上下文都是独一无二的，所以多次调用一个函数会导致创建多个执行上下文，当函数执行完毕，执行上下文被销毁。<br> 查找变量：在哪个函数里面查找变量，就从哪个函数作用域链的顶端依次向下查找。函数类对象，我们能访问test.name<br>test.[[scope]]隐式属性——作用域例 function test (){<br>}<br>第一次执行 test();    →    AO{}    //AO 是用完就不要的第二次执行 test();    →    AO{}    //这是另外的 AO<br>例 function a (){<br>function b (){ var bb = 234; aa = 0;<br>}<br>var aa = 123; b();<br>console.log(aa)<br>}<br>var glob = 100; a();</p>
+<p>0 是最顶端，1 是次顶端，查找顺序是从最顶端往下查<br>理解过程：bb 的AO 是拿到 aa 的 AO，就是同一个 AO，bb 只是引用了 aa 的 AO， GO 也都是同一个。function b(){}执行完，干掉的是b 自己的 AO（销毁执行期上下文）（去掉连接线），下次 function b 被执行时，产生的是新的b 的 AO。b 执行完只会销毁自己的 AO，不会销毁 a 的 AO。function a(){}执行完，会把 a 自己的 AO 销毁<br>【会把 function b 也销毁】，只剩 GO（回归到 a 被定义的时候），等下次 function a再次被执行时，会产生一个全新的 AO，里面有一个新的 b 函数。。。。。。周而复始例</p>
+<p>理解过程<br>a 被定义 a.[[scope]]    →    0 : GO{}<br>a 被执行 a.[[scope]]    →    0 : aAO{}<br>1 : GO{}<br>b 被定义 b.[[scope]]    →    0 : aAO{}<br>1 : GO{}<br>b 被执行 b.[[scope]]    →    0 : bAO{}<br>1 : aAO{}<br>2 : GO{}<br>c 被定义 c.[[scope]]    →    0 : bAO{}<br>1 : aAO{}<br>2 : GO{}<br>c 被执行 c.[[scope]]    →    0 : cAO{}<br>1: bAO{}<br>2: aAO{}<br>3 : GO{}<br>当 c 执行完后，会干掉自己的 cAO，回到c 被定义的状态，当 c 再被执行时，会生成一个新的 newcAO{}，其余都一样，因为基础都是 c 的被定义状态<br>c 被执行 c.[[scope]]    →    0 : newcAO{}<br>1: bAO{}<br>2: aAO{}<br>3 : GO{}<br>如果 function a 不被执行，下面的 function b 和 function c 都是看不到的（也不会被执行，被折叠）。只有 function a 被执行，才能执行function a 里面的内容<br>a();不执行，根本看不到 function a (){}里面的内容</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2020/03/10/js-basics-2-precompile/" data-id="ck7m1ab1600002gu10dycdq6o" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/blog/2020/03/10/js-basics-1-type/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">js-basics-1-type</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2020/03/">March 2020</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/blog/2020/03/10/js-basics-2-precompile/">js-basics-2-precompile</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2020/03/10/js-basics-1-type/">js-basics-1-type</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2020/03/07/firstblog/">firstblog</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2020/03/07/hello-world/">Hello World</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/blog/" class="mobile-nav-link">Home</a>
+  
+    <a href="/blog/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/blog/fancybox/jquery.fancybox.css">
+
+  
+<script src="/blog/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/blog/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>
