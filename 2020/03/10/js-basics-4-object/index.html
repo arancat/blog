@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>js-basics-4-object | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="对象（构造函数 包装类 原型  原型链） 1.用已学的知识点，描述一下你心目中的对象。例 灰色的 undefined 是返回值，因为没有设置返回值，所以就是灰色的undefined .代表函数引用    改mrDeng.health 为this.health，此处this 指代的是自己，是第一人称，指的就是mrDeng。因为 this 是在一个方法里面，所以指的这个方法。smoke : funct">
+<meta property="og:type" content="article">
+<meta property="og:title" content="js-basics-4-object">
+<meta property="og:url" content="http://yoursite.com/2020/03/10/js-basics-4-object/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="对象（构造函数 包装类 原型  原型链） 1.用已学的知识点，描述一下你心目中的对象。例 灰色的 undefined 是返回值，因为没有设置返回值，所以就是灰色的undefined .代表函数引用    改mrDeng.health 为this.health，此处this 指代的是自己，是第一人称，指的就是mrDeng。因为 this 是在一个方法里面，所以指的这个方法。smoke : funct">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-03-10T15:19:48.000Z">
+<meta property="article:modified_time" content="2020-03-10T15:20:43.416Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/blog/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/blog/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/blog/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/blog/">Home</a>
+        
+          <a class="main-nav-link" href="/blog/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/blog/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-js-basics-4-object" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2020/03/10/js-basics-4-object/" class="article-date">
+  <time datetime="2020-03-10T15:19:48.000Z" itemprop="datePublished">2020-03-10</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      js-basics-4-object
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>对象<br>（构造函数 包装类 原型  原型链）</p>
+<p>1.用已学的知识点，描述一下你心目中的对象。<br>例</p>
+<p>灰色的 undefined 是返回值，因为没有设置返回值，所以就是灰色的undefined</p>
+<pre><code>.代表函数引用    </code></pre><p>改mrDeng.health 为this.health，此处this 指代的是自己，是第一人称，指的就是mrDeng。因为 this 是在一个方法里面，所以指的这个方法。<br>smoke : function (){ console.log(‘I am good’) this.health –;<br>},<br>2.属性的增、删、改、查<br>例在上面的基础上 mrDeng.wife = “xiaoliu”<br>也可以在控制台操作<br>3.<br>对象的创建方法<br>(2)构造函数<br>1)系统自带的构造函数 Object()<br>     new Object();Array();Number();Boolean();Date();<br>系统自带的构造函数Object()可以批量生成对象，每一个对象都一样，但是彼此相互独立。<br>在 Object()前面加个 new，变成 new Object()的执行，就会真正的返回一个对象，通过 return 返回，拿变量接受。var obj = new Object();<br>var obj = new Object();和 var obj = {};这样写区别不大</p>
+<p>例 var obj = new Object();    例<br>obj.name = ‘abc’; obj.sex = “male”;<br>双引号和单引号都是表示的字符串，写双引号也可以写单引号，但是为了跟后端 php<br>配合最好写单引号。如果要打印一个单个的引号，用正则表达式转义字符\  注意等号和冒号的用法 obj.say = function(){}    var obj = { name : ‘abc’} 2）自定义<br>Object.create(原型)方法<br>例 function Person(){}</p>
+<p>构造函数内部原理</p>
+<p>Person 是可以随便写的，也是构造函数构造函数跟函数结构上没有任何区别 例 var person1 = new person();<br>必须用 new 这个操作符，才能构造出对象<br>构造函数必须要按照大驼峰式命名规则，但凡是构造函数就要大写，例如TheFirNa<br>例</p>
+<p>car1 和 car 是长得一样，但是是不同的两个 car。方法名和对象名尽量不一样a 和A 变量是两个变量，var car = new Car 里面 car 和 Car 是两个变量<br>例<br>这里的 color 可以和上面的重复</p>
+<p>通过参数，<br>使函数发生变化，变成自定义</p>
+<p>前提必须要加 new，以下三步都是隐式的：<br>1.在函数体最前面隐式的加上var this = {}    空对象<br>2.执 行 this.xxx = xxx;<br>3.隐式的返回 return this<br>例</p>
+<p>例 function Person(name, height){<br>//隐式的 var this = {}，下面正常执行 this<br>this.name = name; this.height = height; this.say = funtion (){<br>console.log(this.say);<br>//此处的 this 和外面的 this 不同<br>}<br>// 隐式的 return this;<br>}<br>console.log(new Person(‘xiaowang’, 180).name);<br>例也可以这样显式的写出来<br>function Person (name, height){<br>var that = {};    //显式写出来that.name = name;<br>that.height = height;<br>return that;    //显式写出来</p>
+<p>例</p>
+<p>答案现在的 peson 和 person1 都是 Object{}<br>如果 return 写成 return 123，会使 return 失效，如右上图<br>x 有 new 了以后就不能返回原始值，例如 123</p>
+<p>var num =123;    →    原始值数字<br>只有原始值数字是原始值，原始值不能有属性和方法<br>属性和方法只有对象有，包括对象自己，数组，function</p>
+<p>var num = new number 123;    →    构造函数。是对象 123，不是原始值数字</p>
+<p>字符串类型的对象<br>var num = new Nunber(123);    //数字类型对象var str = new String(‘abcd’);        //字符串类型对象var bol = new Boolean(‘true’);    //布尔类型对象</p>
+<p>undefined 和null 不可以有属性<br>不能写成 undefined.abc = 123;会报错</p>
+<p>例原始值不可能有属性和方法，但经过了包装类(加隐式)可以调用一些属性与方法<br>var num = 4；<br>num.len = 3;<br>//系统隐式的加上 new Number(4).len = 3;  然后 delete<br>console.log(num.len);<br>//系统隐式的加上 new Number(4).len; 但是这个new number 和上面的 new number<br>不是同一个，所以返回undefined 而上面这些隐式的过程就是包装类例 var str = “abcd”;<br>str.length = 2;<br>//隐式的加上 new string(‘abcd’).length = 2;    delete<br>console.log(str); console.log(str.length);<br>答案是 abcd，4<br>例</p>
+<p>str += 1;    //abc1<br>var test = typeof(str);    //test ==  “string”，返回  string，string 长度是 6<br>if(test.length == 6){<br>test.sign =  “typeof 的返回结果可能为 String”;    //这是原始值,原始值要赋属性值需要调用包装类，赋了跟没赋值是一样的，new String(test).sign=’xxx’;<br>}<br>conlogo.log(test.sign);    //new String(test).sign<br>答案 undefined<br>例</p>
+<p>答案 A，里面并没有用参数<br>被写死了，传参不成功</p>
+<p>例    答案：A<br>例：看看下面 alert 的结果是什么？<br>function b (x, y, a) { arguments[ 2 ] = 10; alert( a );</p>
+<p>答案 1，2，1<br>例</p>
+<p>}<br>b(1, 2, 3);<br>如果函数体改成下面，结果又会是什么？<br>a = 10；<br>alert(arguments[ 2 ]);<br>答案 10，10</p>
+<p>例下面代码中 console.log 的结果是[1,2,3,4,5]</p>
+<p>答 案 1，4, 4 同一个函数，后面会覆盖前面的fn add 会提升到前面</p>
+<p>答案 ACD（枚举后面有清晰版）<br>例：请问以下表达式的结果是什么？<br>parseInt(3, 8)<br>parseInt(3, 2)<br>parseInt(3, 0)<br>答案选 3 或 4，值为 3，NaN，3（有的浏览器遇到 0 是报NaN） 例：以下哪些是JavaScript 语言 typeof 可能返回的结果：<br>A.string    B.array    C.object    D.null</p>
+<p>原型<br>1.定义：原型是function 对象的一个属性，它定义了构造函数制造出的对象的公共祖先。通过该构造函数产生的对象，可以继承该原型的属性和方法。原型也是对象。 2.利用原型特点和概念，可以提取共有属性。<br>3.对象属性的增删和原型上属性增删改查。<br>4.对象如何查看原型 ==&gt;  隐式属性    proto    。 5.对象如何查看对象的构造函数 ==&gt; constructor。<br>例 person.prototype    //原型（描述一种继承关系），出生时就被定义好了<br>person.prototype ={}    //是祖先</p>
+<p>将左上的共有的东西提取出来放在原型里面，如右上图</p>
+<p>右上的 person 和 person1 都有一个共有的祖先Person.prototype</p>
+<p>上面通过对象（后代）改原型（祖先）是不行的，在对象里面修改，只作用给自己改原型都不行，增加肯定也不行。对象可以删除属性</p>
+<p>左上的简化写法见右上    // construnctor 是构造的意思（隐式是浅粉色）</p>
+<p>浅粉色是系统帮你设置的，深紫色是自己设置的</p>
+<p>自己身上有属性，原型上也有属性，取近的，用自己的</p>
+<p>在原型内部自带constructor，指的是Car。通过 constructor 能找的谁构造的自己</p>
+<p>例</p>
+<p>例</p>
+<p>constructor 可以被人工手动更改例</p>
+<p>例</p>
+<p>浅粉色的    proto    是系统的隐式的属性,前面两个_后面两个_，可以修改，尽量不改。在开发的时候，如果很私人可以写成_private，告诉同事别动。<br>上面的 proto 放的是原型。 proto 存的对象的原型<br>上面的 var this ={  proto   :person.prototype};这个对象并不是空的，这个 proto，当你访问这个对象的属性时，如果对象没有这个属性，那么就会访问 proto 索引，看看有没有。有一个连接的关系，原型和自己连接到一起<br>例</p>
+<p>Person 的原型是可以被修改的</p>
+<p>Person.prototype.name 这种.的写法是在原有的基础上把值改了。改的是属性，也就是房间里面的东西。<br>而Person.prototype={name:’cherry’}是把原型改了，换了新的对象。改了个房间。上面在 new 的时候 var this = {  proto :Person.prototype}里面的指向Person，此时Person.prototype 与 proto 指向的是一个空间，把他返回给var person。<br>先 new 再Person.prototype={name:’cherry’}已经晚了<br>在Person.prototype={name:’cherry’}时，Person.prototype 空间改了，但是 proto 指向的空间不变。<br>上面的步骤实际上是→<br>例</p>
+<p>例</p>
+<p>上面这种思考过程：程序执行顺序<br>1.先把 function Person(){}在预编译的过程中提到最上面2.再执行 Person.prototype.name =  ‘sunny’这一样行3.再执行 Person.prototype = {name:’cherry’}<br>4.最后执行 var    person = new Person();执行到 new 的时候，才会发生//var this<br>={ proto :Person.prototype}<br>5.下面的把上面的覆盖了6.答案是 cherry<br>例</p>
+<p>这说明原型里面有原型例<br>原型链</p>
+<p>执行 son.toString    //返回 function toString( ){ [native code] }，这里返回的是原型链终端的 toString<br>Grand.prototype.   proto     = Object.prototype    // Object.prototype 是原型链的终端</p>
+<p> 原型链<br>1、如何构成原型链?（见上一个例子）<br>2、原型链上属性的增删改查<br>原型链上的增删改查和原型基本上是一致的。只有本人有的权限，子孙是没有的。<br>3、谁调用的方法内部this 就是谁-原型案例<br>4、绝大多数对象的最终都会继承自Object.prototype 5、Object.create(原型);<br>6、原型方法上的重写例</p>
+<p>son.fortune.card2=’master’这种改，这是引用值自己的修改。属于 fortune.name 给自己修改，这是一种调用方法的修改<br>例</p>
+<p>son.num++是 son.num=son.num+1 是先把父级的取过来再赋值+1， 所以爹的没变</p>
+<p>例    例 var obj = { };也是有原型的<br>var obj = { };与 var obj1 = new Object( );效果是一样的写 var obj = { }; 系统会在内部来一个 new Object( );</p>
+<p>obj1.   proto     </p>
+<p>→    Object.ptototype;</p>
+<p>但是在构造对象时，能用对象自变量 var obj = { };就不要用 var obj1 = new Object( );<br>例</p>
+<p>console.log(this.name);    //如果写成 name 就会错，没有这个变量<br>例</p>
+<p>//a.sayName ( )方法调用，就是 say.Name 里面的 this 指向，是谁调用的这个方法，this 就指向谁<br>例</p>
+<p>this.height ++;    //这后面默认有一个 return undefined<br>例</p>
+<p>对像自变量的原型就是Object.ptototype;<br>Object.create(原型);<br>//var obj = Object.create(原型);<br>Object.create 也能创建对象。var obj = Object.create（这里必须要有原型） 例</p>
+<p>例</p>
+<p> 绝大多数对象的最终都会继承自 Object.prototype<br>例 html 里面没有添加任何东西这样就报错</p>
+<p>原型是隐式的内部属性，你加是没有用的</p>
+<p>例    例<br>Object.create()在括号里面只能放null 或者Object，其余会报错<br>例 undefined 和null 没有原型，也就不可能有toString 方法</p>
+<p>例下面 123.toString 首先会识别成浮点型，所以在后面直接加.toString 是不行的</p>
+<p>数字想用 toString 方法，要经过包装类包装new Number(num)然后. toString<br>例加深上面的理解</p>
+<p>而 new Number(num). toString 的原型是Nunber.prototype，而 Nunber.prototype 上面有一个.toString 方法，Nunber.prototype 也有原型Nunber.prototype. proto ，原型是<br>Object.prototype<br>假如 new Number 上面的prototype 上面有这个 toString，那么就不用 Object.prototype<br>的 toString。而这个 number 上面有这个 toString。<br>然后 number 上面的 toString 调用的是自己重写的 toString。<br> 原型上有这个方法，我自己又写了一个和原型上同一名字，但不同功能的方法，叫<br> 做重写（同一名字的函数，不同重写方式） 通过返回值，形参列表不同传参<br>同样的名实现不同功能的，就是重写</p>
+<p>和原型链上终端方法名字一样，但实现不同的功能，叫做方法的重写。也就是覆盖</p>
+<p>下面这个也是重写</p>
+<p>例让 object 上面的 toString 重写了。<br>所以 num.toString()调用的是 number. prototype.toString。</p>
+<p>如果调用的是 object. prototype.toString 结果会不一样。</p>
+<p>例</p>
+<p>例例例<br>document.write 会隐式的调用 toString 方法，其实打印的是 toString 的结果</p>
+<p>没有原型就不能 toString<br>例</p>
+<p>上面这个例子表示：我要打印的是 obj，实际上打印出来的是 toString 方法，也证明了 document.write 调用的是 toString 方法</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2020/03/10/js-basics-4-object/" data-id="ck7m1l7qr0000o4u1gmrn2yvf" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/blog/2020/03/10/js-basics-3-closure/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">js-basics-3-closure</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2020/03/">March 2020</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/blog/2020/03/10/js-basics-4-object/">js-basics-4-object</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2020/03/10/js-basics-3-closure/">js-basics-3-closure</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2020/03/10/js-basics-2-precompile/">js-basics-2-precompile</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2020/03/10/js-basics-1-type/">js-basics-1-type</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2020/03/07/firstblog/">firstblog</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/blog/" class="mobile-nav-link">Home</a>
+  
+    <a href="/blog/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/blog/fancybox/jquery.fancybox.css">
+
+  
+<script src="/blog/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/blog/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>
