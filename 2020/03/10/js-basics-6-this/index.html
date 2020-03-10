@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>js-basics-6-this | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="this重点：this预编译过程，arguments,克隆(深层克隆，浅层克隆)， this —&gt; 指 向 window 可以改变函数运行时this 指向func()里面的 this 指向 obj谁调用这个方法,这个方法里的 this 就是指向谁    → 例a.say 是 function 函数体function (fun){&#x2F;&#x2F;this → b&#x2F;&#x2F;console.log(this)→bf">
+<meta property="og:type" content="article">
+<meta property="og:title" content="js-basics-6-this">
+<meta property="og:url" content="http://yoursite.com/2020/03/10/js-basics-6-this/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="this重点：this预编译过程，arguments,克隆(深层克隆，浅层克隆)， this —&gt; 指 向 window 可以改变函数运行时this 指向func()里面的 this 指向 obj谁调用这个方法,这个方法里的 this 就是指向谁    → 例a.say 是 function 函数体function (fun){&#x2F;&#x2F;this → b&#x2F;&#x2F;console.log(this)→bf">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-03-10T15:33:04.000Z">
+<meta property="article:modified_time" content="2020-03-10T15:38:17.551Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/blog/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/blog/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/blog/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/blog/">Home</a>
+        
+          <a class="main-nav-link" href="/blog/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/blog/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-js-basics-6-this" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2020/03/10/js-basics-6-this/" class="article-date">
+  <time datetime="2020-03-10T15:33:04.000Z" itemprop="datePublished">2020-03-10</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      js-basics-6-this
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>this<br>重点：this预编译过程，arguments,克隆(深层克隆，浅层克隆)，</p>
+<p>this —&gt; 指 向 window</p>
+<p>可以改变函数运行时this 指向<br>func()里面的 this 指向 obj<br>谁调用这个方法,这个方法里的 this 就是指向谁    →</p>
+<p>例<br>a.say 是 function 函数体<br>function (fun){<br>//this → b<br>//console.log(this)→b<br>fun( );</p>
+<p>}<br>fun()空执行，走预编译<br>在 b.say(a.say)中<br>a.say 当做参数传进来了</p>
+<p>答案 fun( )是 222    a.say 是 111    b.say(a.say);是 222    b.say( );是 333</p>
+<p>arguments arguments.callee 指向函数的引用（函数自己） function.caller</p>
+<p>例我们要初始化数据，是 100 以内的阶乘，用立即执行函数找到自己的引用来解决</p>
+<p>在哪个函数里面的 arguments.callee 就指代了哪个函数</p>
+<p>例 caller 谁叫他，caller 不能用在 arguments 里面</p>
+<p>demo 被调用的环境是 test 所以这个 caller 指代的 test 例</p>
+<p>答案是 456<br>把上面这题变形：</p>
+<p>答案打印 234，要 console.log(foo);是全局的 foo，但是这里 this.foo 的 this 是指向全局 window 的，相当于就把外面的 123 改成了 234<br>例</p>
+<p>答案 123，new 了以后，隐式 var this = Object.create(print.prototype)这时候 this.foo 不<br>再指向 window，转而指向var this，所以打印的时候找不到 234，就到全局找到 123</p>
+<p>答案运行 test( )是 0，5，0【之前其中 this.a 指代的是 window，所以是 5】运行 new test( )是 0，undefined ，0【因为 this 上没有 a，所以打印 undefined<br>在执行 test( )之前，AO 被定义{a:undefined}，执行之后，AO 被执行{a:0,this:window} 在执行new test( )时会隐式的var this = Object.create(test.prototype)简化就是var this ={<br>    proto : test prototype}一个对象上面没有的属性，打印出来就是 undefined new test( );执行的时候 AO 是{a:0，this:{} }</p>
+<p>答案 undefined，2，报错 hello is no defined<br>因为 hello 没有被定义，所以报错例</p>
+<p>答案打印 One！ 例</p>
+<p>答案：test1，test2，marty，做不了有 bind，test3<br>例</p>
+<p>bar.a=’a’;<br>把{a:”002”}<br>变成<br>{a:’a’}<br>答案 a，b 其中 print( ) ( )第一个括号返回的是一个函数，第二个再来函数执行</p>
+<p>思考上一个题做深度克隆，分析他是什么，建立是什么，收尾需要一个递归，提示：</p>
+<p>作业：做一个深度克隆（copy 后，各自独立，互不影响）<br>思路：需要一个分析环节，分析是什么，是原始值就按原来的方法拷贝过来，是引用值就分析是数组还是对象。如果是数组，就新建一个数组；如果是对象，就新建一个对象。再一层层看，里面有一个递归。引用值不能直接拷贝，引用值拷贝的是地址</p>
+<p>var obj = {<br>name : “abc”, age : 123,<br>card : [‘visa’, ‘master’], //原始对象<br>wife : {<br>name : “bcd”, son : {<br>name : “aaa”<br>}</p>
+<p>deepClone ( origin [ prop ], target [ prop ]);<br>}else{    //else 后面是原始值<br>target [ prop ] = origin [ prop ];<br>}<br>}<br>}<br>return target;<br>}</p>
+<p>}<br>var obj1 = {<br>name : “abc”, age : 123,<br>card : [ obj.card[ 0 ],obj.card[ 1 ] ],<br>//要拷贝的对象，进行 obj 里面的数组，对这个数组的拷贝再一次拷贝<br>wife : {<br>name : “bcd”, son : {<br>name : “aaa”<br>}<br>}<br>}<br>function deepClone(origin, target){<br>var target = target | | {},    //有就用你的，没有就用后面的<br>toStr = Object.prototype.toString,    //引用，目的是简化<br>arrStr =  “ [ Object Array ]  ”;    //引用，目的是简化比对<br>for ( var prop in origin ) {    //从原始 origin 拷贝到 target<br>if( origin . hasOwnProperty( prop ) ){    //先判断是不是原型上的属性，如果是false 就是原型上的<br>if( typeof (origin [ prop ] ) !== “null” &amp;&amp; typeof ( origin [ prop ] ) ==<br>‘object’) {<br>if ( toStr.call( origin    [ prop ] ) ) == arrStr ){ target [ prop ] = [ ];<br>}else{<br>target [ prop ] = { };<br>}</p>
+<p>深度克隆的步骤<br>1、先把所有的值都遍历一遍（看是引用值和原始值）<br>用 for ( var prop in obj )，对象和数组都可以使用<br>2、判断是原始值，还是引用值？用 typeof 判断是不是object 1）如果是原始值就直接拷贝<br>2）如果是引用值，判断是数组还是对象<br>3、判断是数组还是对象？（方法instanceof【看a 的原型链上有没有b 的原型】、toString、constructor，建议用 toString,另外两个有个小bug——跨父子域不行） 1）如果是数组，就新建一个空数组；<br>2）如果是对象，就新建一个空对象。<br>4、建立了数组以后，如果是挨个看原始对象里面是什么，都是原始值就可以直接考过来了；或者，建立了对象以后，挨个判断对象里面的每一个值，看是原始值还是引用值<br>5、递归<br> 三目运算符    ?    :<br> 形式：?问号前面是一个条件判断，判断 true 就走：冒号前面的；false 就走：冒号后<br> 面的，并且会返回值    条件判断？    是 ： 否    并且会返回值三目运算符是简化版的 if（条件判断）{是在这里}else{否在这里}<br>例 var num = 1 &gt; 0 ? 2 + 2 : 1 + 1;<br>//答返回值为 4<br>例 var num = 1 &lt; 0 ? 2 + 2 : 1 + 1;<br>//答返回值为 2<br>例 ar num = 1 &gt; 0 ? ( “10” &gt; 9 ? 1 : 0 ) : 2;<br>//答 1<br>例 var num = 1 &gt; 0 ? ( “10” &gt; “ 9 “ ? 1 : 0 ) : 2;<br>//答 0，因为“10” &gt; “ 9 “ 比的是ASCII 码，一位位比，一零小于 9，先用 1 和<br>9 比，在 asc 妈里面 1 小于 9；<br>当“10” &gt;    9 字符串和数字比，会先转换成数字再比较</p>
+<p>例可利用三目运算符简化克隆的代码<br>for ( var prop in origin ) {<br>if( origin . hasOwnProperty( prop ) ){<br>if( typeof (origin [ prop ] ) !== “null” &amp;&amp; typeof ( origin [ prop ] ) ==<br>‘object’) {<br>target [ prop ] = toStr.call (origin [ prop ] ) ==arrStr ? [] : {}; deepClone ( origin [ prop ], target [ prop ]);<br>}else{    //else 后面是原始值<br>target [ prop ] = origin [ prop ];</p>
+<p>例 var arr = new Array ( 10 );长度为 10 的稀疏数组，括号里面只有一位数，就代表着长度，并且里面每一位都没有值，console 里面会是undefined*10。并且里面不能写小数，会报错。<br>var arr1 = [ 10 ]；<br>数组的读和写，基本上没有报错的情况，除非是引用了没有的方法<br>js 数组是基于对象的，数组是一种特殊的对象</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2020/03/10/js-basics-6-this/" data-id="ck7m264vb0000egu169s5eyli" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/blog/2020/03/10/js-basics-5-inherit/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">js-basics-5-inherit</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2020/03/">March 2020</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/blog/2020/03/10/js-basics-6-this/">js-basics-6-this</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2020/03/10/js-basics-5-inherit/">js-basics-5-inherit</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2020/03/10/js-basics-4-object/">js-basics-4-object</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2020/03/10/js-basics-3-closure/">js-basics-3-closure</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2020/03/10/js-basics-2-precompile/">js-basics-2-precompile</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/blog/" class="mobile-nav-link">Home</a>
+  
+    <a href="/blog/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/blog/fancybox/jquery.fancybox.css">
+
+  
+<script src="/blog/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/blog/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>
