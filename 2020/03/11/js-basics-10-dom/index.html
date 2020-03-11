@@ -104,7 +104,7 @@
 <p>例：现在要实现按住加速，不好写没写，看 js 运动课</p>
 <p>按住加速：就是这一次按下与下一次按下的速度间隔时间十分短暂，就认为他加速了。<br>上面思路：每一次按下的时候都记录一个新的时间片段，都减去上一个执行的时间片段，如果时间片段都小于一定的毫秒数的话，我们让一个计数器去++，当连续小于的时候，就让计数器连续++,如果++到一定数的时候，我们认为是连续按了，再按就加速了，让每一次按的时候都判断一下,如果时间间隔过大的话，就让计数器重新归 0。——在 js 运动课里面讲</p>
 <p>例 box-sizing:border-box;启动了另外一种盒模型</p>
-<p>中间有<li img-date=”0”></li>*400，onmouseover 是鼠标滑过变成</p>
+<p>中间有<li img-date="”0”"></li>*400，onmouseover 是鼠标滑过变成</p>
 <p>把左边的案例，如图去掉边线</p>
 <p>emmet 插件提供的方法：（打字操作）例 div*3<br>例 div.demo 就是直接设置了 class 名字例 div.demo#only<br>例 div.demo#only</p>
 <p>例 div.demo#only &gt; p[style=’background-color:red;width:100px;height:100px;’]</p>
@@ -125,9 +125,9 @@
 <p>下面的都是实时的</p>
 <p>childNodes → 子节点们</p>
 <p>例.querySelectorAll()选中了所有的 div，但是实时操作不能实时反馈</p>
-<p>节点为什么是 7？<br>答案第一个节点是<div>后面的文本节点（空格回车），第二个节点是元素节点<br><strong><span>1</span></strong>，第三个节点是跟着的文本节点（空格回车），第四个节点是<span></span>，第五个是跟着的文本节点（空格回车），第六个是<em></em>，第七个是跟着的文本节点（空格回车）</p>
+<p>节点为什么是 7？<br>答案第一个节点是<div>后面的文本节点（空格回车），第二个节点是元素节点<br><strong><span>1</span></strong>，第三个节点是跟着的文本节点（空格回车），第四个节点是<span></span>，第五个是跟着的文本节点（空格回车），第六个是<em></em>，第七个是跟着的文本节点（空格回车）</div></p>
 <p>后面的数字是调用 nodeType 返回的数字<br>元素节点    ——    1<br>属性节点    ——    2    （基本没用，）<br>文本节点    ——    3<br>注释节点    ——    8<br>document    ——    9<br>DocumentFragment    ——    11</p>
-<p>答案七个，第一个节点是<div>后面的文本节点（空格回车），第二个节点是注释节点，第三个节点是跟着的文本节点（空格回车），第四个节点是元素节点<br><strong></strong>，第五个是跟着的文本节点（空格回车），第六个是<span></span>， 第七个是跟着的文本节点（空格回车）</p>
+<p>答案七个，第一个节点是<div>后面的文本节点（空格回车），第二个节点是注释节点，第三个节点是跟着的文本节点（空格回车），第四个节点是元素节点<br><strong></strong>，第五个是跟着的文本节点（空格回车），第六个是<span></span>， 第七个是跟着的文本节点（空格回车）</div></p>
 <p>答案七个，123 和空格等是一个文本</p>
 <p>例 nextSibling →后一个兄弟节点 ，previousSibling → 前一个兄弟节点</p>
 <p> 基于元素节点树的遍历（不含文本节点）<br>（除 children 外，其余 ie9 及以下不兼容）<br>parentElement -&gt; 返回当前元素的父元素节点 (IE 不兼容) 例</p>
@@ -150,8 +150,8 @@
 <p>document 继承自 HTMLDocument.prototype。HTMLDocument.prototype 继承自 Document.prototype</p>
 <p>DOM 基本操作<br>1.getElementById 方法定义在 Document.prototype 上，即Element 节点上不能使用。2.getElementsByName 方法定义在 HTMLDocument.prototype 上，即非 html 中的document 以外不能使用(xml document,Element)<br>3.getElementsByTagName 方法定义在 Document.prototype 和 Element.prototype 上例选 div 里的 span</p>
 <p>开发中，经常利用先选择的父级，在他父级里面再次选什么元素来定位一个元素例</p>
-<p>4.HTMLDocument.prototype 定义了一些常用的属性，body,head,分别指代 HTML 文档中的<body><head>标签。</p>
-<p>5.Document.prototype 上定义了 documentElement 属性，指代文档的根元素，在 HTML<br>文档中，他总是指代<html>元素</p>
+<p>4.HTMLDocument.prototype 定义了一些常用的属性，body,head,分别指代 HTML 文档中的<body><head>标签。<meta name="generator" content="Hexo 4.2.0"></head></body></p>
+<p>5.Document.prototype 上定义了 documentElement 属性，指代文档的根元素，在 HTML<br>文档中，他总是指代<html>元素</html></p>
 <p>6.getElementsByClassName、querySelectorAll、querySelector 在Document,Element 类中均有定义<br>作业 1.遍历元素节点树，要求不能用 children 属性（在原型链上编程）<br>答案：低级方法，给一个父节点，把子节点全部遍历出来，并打印<br>高级方法：打印树形结构 → 分层打印出来<br>先看 div 再看子元素节点， 再挨个判断</p>
 <p>2.封装函数，返回元素 e 的第 n 层祖先元素</p>
 <p>3.封装函数，返回元素 e 的第 n 个兄弟节点，n 为正，返回后面的兄弟节点，n 为负， 返回前面的，n 为 0，返回自己。<br>答案</p>
@@ -198,7 +198,7 @@ for 循环
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/03/11/js-basics-10-dom/" data-id="ck7mps94m0000jgu1hrzcfpb3" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/03/11/js-basics-10-dom/" data-id="ck7nh8zku0006kcu1fr39ci26" class="article-share-link">Share</a>
       
       
     </footer>
@@ -256,6 +256,10 @@ for 循环
       <ul>
         
           <li>
+            <a href="/blog/2020/03/11/js-bascis-MindMater/">js-bascis-MindMater</a>
+          </li>
+        
+          <li>
             <a href="/blog/2020/03/11/html-css-basics-sunmmary/">html-css-basics-sunmmary</a>
           </li>
         
@@ -269,10 +273,6 @@ for 循环
         
           <li>
             <a href="/blog/2020/03/11/js-basics-10-dom/">js-basics-10-dom</a>
-          </li>
-        
-          <li>
-            <a href="/blog/2020/03/10/js-basics-9-es5/">js-basics-9-es5</a>
           </li>
         
       </ul>

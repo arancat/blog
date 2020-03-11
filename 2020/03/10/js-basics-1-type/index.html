@@ -92,7 +92,7 @@
 <p>web 发展史<br>Mosaic，是互联网历史上第一个获普遍使用和能够显示图片的网页浏览器。于 1993<br>年问世。<br>1994 年 4 月，马克.安德森和 Silicon Graphics（简称为 SGI，中译为“视算科技”或“硅图”）公司的创始人吉姆·克拉克（Jim Clark）在美国加州设立了“Mosaic Communication Corporation”。<br>Mosaic 公司成立后，由于伊利诺伊大学拥有 Mosaic 的商标权，且伊利诺伊大学已将技术转让给 Spy Glass 公司，开发团队必须彻底重新撰写浏览器程式码，且浏览器名称更改为Netscape Navigator，公司名字于 1994 年 11 月改名为“Netscape<br>Communication Corporation”，此后沿用至今，中译为“网景”。<br>微软的Internet Explorer及Mozilla Firefox等，其早期版本皆以Mosaic 为基础而开发。微软随后买下Spy Glass 公司的技术开发出Internet Explorer 浏览器，而Mozilla Firefox 则是网景通讯家开放源代码后所衍生出的版本。<br>js 历史<br>JavaScript 作为 Netscape Navigator 浏览器的一部分首次出现在 1996 年。它最初的设计目标是改善网页的用户体验。<br>作者：Brendan Eich<br>期初JavaScript 被命名为 LiveScript，后因和 Sun 公司合作，因市场宣传需要改名<br>JavaScript。后来 Sun 公司被 Oracle 收购，JavaScript 版权归 Oracle 所有。</p>
 <p>js 的特有特色</p>
 <pre><code>编译型语言    解释性语言</code></pre><p>怎么做    通篇翻译后，生成翻译完的文件，<br>程序执行翻译后的文件    看一行翻译一行，不生成特<br>定文件<br>代表语言    C,C++    JS,PHP，python 带尖角号<br>优点    快(常用于系统，游戏)    可以跨平台<br>缺点    移植性不好（不跨平台，window 和<br>Linux 不能混用）    稍微慢点<br>js 是解释性语言：(不需要编译成文件）跨平台<br>java 先通过 javac，编译成.class 文件，通过 jvm（Java 虚拟机）进行解释执行<br>.java→javac→编译→.class→jvm→解释执行（java 可以跨平台）（java 是 oak 语言）</p>
-<link rel = “”>是异步加载
+<link rel="“”">是异步加载
 单线程：同一时间只能做一件事——js 引擎是单线程
 （同一时间做很多事叫多线程）
 ECMA（欧洲计算机制造联合会）标注：为了取得技术优势，微软推出了 JScript， CEnvi 推出ScriptEase，与 JavaScript 同样可在浏览器上运行。为了统一规格 JavaScript兼容于 ECMA 标准，因此也称为ECMAScript。
@@ -101,11 +101,11 @@ js 是轮转时间片
 
 <p>浏览器组成<br>1.shell 部分——用户能操作部分(壳)<br>2.内核部分——用户看不到的部分<br>1)渲染引擎（语法规则和渲染） 2)js 引擎<br>3)其他模块（如异步）</p>
 <p>js 引擎<br>2001 年发布 ie6，首次实现对 js 引擎的优化。<br>2008 年Google 发布最新浏览器Chrome，它是采用优化后的 javascript 引擎，引擎代号 V8，因能把 js 代码直接转化为机械码来执行，进而以速度快而闻名。<br>后 Firefox 也推出了具备强大功能的 js 引擎<br>Firefox3.5    TraceMonkey（对频繁执行的代码做了路径优化）<br>Firefox4.0    JeagerMonkey</p>
-<p>开始学习 js<br>js 三大部分 ECMAScript、DOM、BOM<br>如何引入 js?<br>1、页面内嵌<script></script>标签,写 head 里面也行,写 body 里面也行<br>例<body></p>
+<p>开始学习 js<br>js 三大部分 ECMAScript、DOM、BOM<br>如何引入 js?<br>1、页面内嵌<script></script>标签,写 head 里面也行,写 body 里面也行<br>例<body></body></p>
 <script type="text/javascript">    //告诉浏览器我们是 js
 </script>
-</body>
-2、外部 js 文件，引入<script src=“location”></script>
+
+2、外部 js 文件，引入<script src="“location”"></script>
 例如：以 lesson.js 保存文件，再引入到html 中
 为符合 web 标准（w3c 标准中的一项）结构（html）、行为（js）、样式（css）相分离，通常会采用外部引入。
 一个文件中可以包括多个 css，js——不混用特殊写页面，大部分写在外部——不混用
@@ -226,7 +226,7 @@ var a; 这个叫变量声明。我们向系统中申请了 var 这个框，命�
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/03/10/js-basics-1-type/" data-id="ck7m0z0hi0000awu1aldpeaeo" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/03/10/js-basics-1-type/" data-id="ck7nh8zlq000fkcu19sxu8rie" class="article-share-link">Share</a>
       
       
     </footer>
@@ -284,6 +284,10 @@ var a; 这个叫变量声明。我们向系统中申请了 var 这个框，命�
       <ul>
         
           <li>
+            <a href="/blog/2020/03/11/js-bascis-MindMater/">js-bascis-MindMater</a>
+          </li>
+        
+          <li>
             <a href="/blog/2020/03/11/html-css-basics-sunmmary/">html-css-basics-sunmmary</a>
           </li>
         
@@ -297,10 +301,6 @@ var a; 这个叫变量声明。我们向系统中申请了 var 这个框，命�
         
           <li>
             <a href="/blog/2020/03/11/js-basics-10-dom/">js-basics-10-dom</a>
-          </li>
-        
-          <li>
-            <a href="/blog/2020/03/10/js-basics-9-es5/">js-basics-9-es5</a>
           </li>
         
       </ul>
