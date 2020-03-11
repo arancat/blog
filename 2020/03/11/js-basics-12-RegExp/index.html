@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>js-basics-12-RegExp | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="RegExp 正则表达式 正则表达式的作用：匹配特殊字符或有特殊搭配原则的字符的最佳选择。RegExp 对象表示正则表达式，它是对字符串执行模式匹配的强大工具（判断字符串满不满足要求）。正则表达式其他语言也有，规则是一样的，在这个基础上，js 增加了自己独特的方法。例 ㈠. 基础语法创建一个正则表达式第一种方法：正则表达式字面量&#x2F;&#x2F;    【推荐使用这种】例 var reg &#x3D; &#x2F;pattern&#x2F;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="js-basics-12-RegExp">
+<meta property="og:url" content="http://yoursite.com/2020/03/11/js-basics-12-RegExp/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="RegExp 正则表达式 正则表达式的作用：匹配特殊字符或有特殊搭配原则的字符的最佳选择。RegExp 对象表示正则表达式，它是对字符串执行模式匹配的强大工具（判断字符串满不满足要求）。正则表达式其他语言也有，规则是一样的，在这个基础上，js 增加了自己独特的方法。例 ㈠. 基础语法创建一个正则表达式第一种方法：正则表达式字面量&#x2F;&#x2F;    【推荐使用这种】例 var reg &#x3D; &#x2F;pattern&#x2F;">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-03-11T02:46:51.000Z">
+<meta property="article:modified_time" content="2020-03-11T02:48:19.512Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/blog/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/blog/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/blog/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/blog/">Home</a>
+        
+          <a class="main-nav-link" href="/blog/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/blog/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-js-basics-12-RegExp" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2020/03/11/js-basics-12-RegExp/" class="article-date">
+  <time datetime="2020-03-11T02:46:51.000Z" itemprop="datePublished">2020-03-11</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      js-basics-12-RegExp
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>RegExp 正则表达式</p>
+<p>正则表达式的作用：匹配特殊字符或有特殊搭配原则的字符的最佳选择。<br>RegExp 对象表示正则表达式，它是对字符串执行模式匹配的强大工具（判断字符串满不满足要求）。正则表达式其他语言也有，规则是一样的，在这个基础上，js 增加了自己独特的方法。<br>例</p>
+<p>㈠. 基础语法<br>创建一个正则表达式<br>第一种方法：正则表达式字面量//    【推荐使用这种】例 var reg = /pattern/;</p>
+<p>例：意思是正则表达式测验一下字符串含不含有我规定的片段</p>
+<p>例像下面这种，虽然都有 abce，但是没挨着，或者排序不对，都不算</p>
+<p> 第二种方法：new RegExp();<br>var reg = new RegExp(“pattern”);<br>例：括号里面写的是规则</p>
+<p>例下面是给正则表达式增加属性的方法：</p>
+<p>例在正常情况下，下面两个虽然是形式一样，但是是两个不同的正则表达式</p>
+<p>^a 的意思是必须是这个 a 开头，那么下面这串就只有一个例</p>
+<p>例因为上面这种写法没有多行匹配的功能，直到给他加上了 m</p>
+<p>上面这三种方法还能组合到一起，例 var reg = /abce/igm;<br>正则表达式的表达式：<br>reg.test( ); 只能判断这个字符串有没有符合要求的片段，返回结果只有 true 和false str.match( ); 可以把所有东西都匹配出来，返回给你，比上一种方法更直观，还能告诉你返回了多少个<br>例：想把第一、二、三位都是数字都匹配出来，不同，可变化的数字，可以用[]来写， 一个[]代表一位数，[]里面放的是范围，是一个区间，如[1234567890，如下图：</p>
+<p>例<br>例 0-9 是指 0 到 9，A-Z 是指大A 到大 Z，a 到 z 是指小 a 到小 z</p>
+<p>这个是按照 ASC 码排序的，从大写到小写可以写成A-z</p>
+<p>例^在表达式里面和外面的意思是不一样的，在里面是非的意思</p>
+<p>i 是 ignoreCase，是忽视大小写的意思，例 var reg = /abce/i;<br>g 是全局匹配的意思，例 var reg = /abce/ g;<br>m 执行多行匹配，例 var reg = /abce/ m;<br>例</p>
+<p>例正则表达式中 | 是或的意思，下面是匹配 abc 或bcd</p>
+<p>正则表达式的元字符和表达式是一个东西<br> 元字符（Metacharacter）是拥有特殊含义的字符：<br>\w 代表一位，w 意思是 world， \w===完全等于[0-9A-z_]<br>\W === [^\w]    大写\W 是非的\w<br>例</p>
+<p>例下面的    是一个制表符\t 打出来的，但是系统是不能识别的要写成以下形式才能识别\t<br>例\r 匹配回车</p>
+<p>\d === [0-9]<br>\D ==== [^\d] ， \D ==== [^0-9]<br>例<br>表达式里面可以写元字符<br>\s === [空白字符，即\t\n\r\v\f ]    最常用的是空格和换行<br>在正则表达式中写空格就代表空格<br>\S ==== [非空白字符]</p>
+<p>\b === 单词边界<br>\B ==== 非单词边界<br>单词边界在字符串里面可以看成 （空格）<br>例下面 str 有六个单词边界，写成 var reg = /\bc/g;意思是 c 前面要有一个单词边界</p>
+<p>例 cde 前面要是一个单词边界，后面也要上一个单词边界</p>
+<p>例</p>
+<p>\uxxxx    这是简单的四位的Unicode 编码（包含了汉字）<br>查找以十六进制数 xxxx 规定的 Unicode 字符。<br>还有六位数 Unicode 编码（前两位代表的是层，后面代表的是范围）<br>\u010000 - \u01ffff      第一层 Unicode 编码的区间<br>\u020000 - \u02ffff      第二层 Unicode 编码的区间<br>\u100000 - \u10ffff   第十六层Unicode 编码的区间经常用的是第一层，一般会忽略 01，写成\uxxxx。例<br>例 Unicode 编码也可以写成区间，如下</p>
+<p>注意：代表一切的集合var reg = /[/s/S]/;或者/[/d/D]/这样类似的</p>
+<p>例<br>正则表达式的量词（代表数量的词）<br>匹配任何包含至少一个 n  的字符串。这个变量可以出现 1 到无数次。匹配任何包含零个或多个 n 的字符串。这个变量可以出现 0 到无数次。<br>n 是一个变量，n+代表这个变量可以重复出现 1 次到无数次，n*代表{0 到正无穷} 例</p>
+<p>光标在 c 后面，c 后面有逻辑上的距离，<em>如果是零，匹配的是空。\w 会先把能识别<br>值的先识别，到最后识别不了，才试一下</em>零，匹配空</p>
+<p>例</p>
+<p>因为光标在 a 前面，逻辑上有距离，匹配了一个零，空串；然后光标移动 a 后面， 逻辑上有距离，又匹配了一个零，空串，所以有多少个光标定位点就有多少个<br>例<br>正则表达式有一个贪婪匹配原则，能多就不少<br>n?    匹配任何包含零个或一个 n 的字符串。这个变量 0 或 1 个一匹配。<br>例最后会匹配一个空</p>
+<p>n{X}    匹配包含 X 个 n 的序列的字符串。<br>例如 n{3}就是三个三个一匹配</p>
+<p>例以 ed 结尾</p>
+<p>例</p>
+<p>上面这道题应该理解成：以当前这个 abc 开头，以这个 abc 结尾的字符串例<br>作业：写一个字符串，检验一个字符串首尾是否含有数字。<br>首尾都含有的意思是需要加“都”；首尾的意思是首有，或，尾有<br>答案<br>如果是首和尾都有：</p>
+<p>n{X,Y}    匹配包含 X 至 Y 个 n 的序列的字符串。<br>例下面要符合贪婪匹配原则，/\w{3,5}/就是能 5 个就不 4 个，能 4 个就不 3 个</p>
+<p>n{X, }       匹配包含至少 X  个 n  的序列的字符串。例/\w{1,}/ {1,}和 n+是一样的，指匹配 1 到无数个。例/\w{2,}/ {2,}是匹配 2 到无数个<br>思考：量词，量的是什么？<br>答案：n*是 n 乘以这个量词，/\w{2,}/不是\w 的结果乘以量词，如果\w 的结果乘以这个量词，那么匹配的都是一致的。量词量的是 w，是\w 乘很多东西，再每个w 再随机匹配。而不是\w 先匹配结果，再乘以量词（例如先匹配一个 a，再乘以那么多a 就匹配不成来了，所以不能这么理解）<br>例<br>n$    匹配任何结尾为 n 的字符串。<br>例<br>例^abc 是以a 开头的 abc</p>
+<p>例$是以 d 结尾，这个匹配不出来</p>
+<p>111</p>
+<p>例如果把游标归 0</p>
+<p>例如果不加 g，lastIndex 就不会动，如下</p>
+<p>例说明他在第一个 ab 后面接着匹配</p>
+<p>例：游标的属性是 lastIndex。lastIndex 是为了 exec 而存在的</p>
+<p> 拓展知识<br>例 var str =  “aaaa”;    //想要匹配四个一样 xxxx 的<br>var reg = /( a )/g;    //这个括号还有一个子表达式的意思，正常来说括号写了没有用，也没影响，但是在特殊情况，当你把式子当特殊括起来以后，这个括号会记录里面匹配的内容，记录完以后利用\几可以反向引用出来，如下<br>var reg = /( a )\1/g;     //这个\1 意思是反向引用第一个子表达式里面的内容，这里的意思是匹配 a 和后面同样的a<br>如果换成 var reg = /( \w )\1/g; //意思就变成了\w 匹配出来的东西，后面要 copy 一个一样的<br>例想要匹配四个一样的写法如下：</p>
+<p>例例<br>例现在想匹配出 aabb，应该怎么写？/(\w)\1(\w)\2/里面\1 是反向引用第一个表达式里面的内容，(\w)\2 是反向引用第二个表达式里面的内容。</p>
+<p>上面多出了第一个字表达式和第二个子表达式的内容，而且是正式的数据位，虽然<br>是类数组，但是能当数组用。</p>
+<p>例就算不加 g，也会这样匹配出来，只是不改变index    例</p>
+<p>例 match    找到一个或多个正则表达式的匹配。</p>
+<p>例如果写()子表达式就会把子表达式的东西返回，如果不写就不能反向引用了<br>例但是加 g 了以后，只把匹配了多少个给你</p>
+<p>例 search    检索与正则表达式相匹配的值。<br>返回的不是-1 都匹配成功了，返回的是匹配的这个东西的位置</p>
+<p>例加不加 g，没有区别</p>
+<p>例如果匹配不到就返回-1</p>
+<p>split    把字符串分割为字符串数组。<br>例：按双重复的拆分（加不加 g 返回都一样）。下面这种失败</p>
+<p>replace    替换与正则表达式匹配的子串。    非常实用例</p>
+<p>上面是非正则表达式的缺点，想要返回 bb，但是返回的是 ba。没有返回全局的能力。例</p>
+<p>例</p>
+<p>replace 的精华是正则表达式<br>例：想把 aabb 匹配出来，再倒过来<br>答案方法一</p>
+<p>上面 str.replace(reg,””)替换的信息不管写什么都要写成字符串，字符串里面“$1”代表第一个子表达式的内容，“$2”代表第二个子表达式的内容<br>方法二，写成 function，而 function（，  ，）{}里面传的第一个参数是正则表达式匹配的全局（结果）（可随便起名），第二个参数是第一个表达式匹配的内容，第三个参数是第二个表达式匹配的内容（写 return$1$2 不适合语法）</p>
+<p>例 var reg = /a{1,3}?/g;    //这个 1 到 3，意思是有 1 就不取 2，3<br>思考：如果在量词是??<br>例 var reg = /a??/g;    //??第一个问号代表量词，第二个问号叫取消他的匹配，第一个问号是 0-1 的意思，加个问号就是能取 0 就不取 1<br>*?意思是能取 0 就不取多<br>例</p>
+<p>例把 the-first-name 变成小驼峰式写法theFirstName<br>思路：是把-f 变成 F，把-n 变成N，先匹配再转换</p>
+<p>答案</p>
+<p>上面的 function 匹配了多少次，就有多少次 function 的执行，而上面的 reg 找了两次， 找一次匹配一次<br>正向预查/正向断言<br>?=n    匹配任何其后紧接指定字符串 n  的字符串。例我要选一个 a，后面跟着b，就是正向预查/正向断言</p>
+<p>/a(?=b)/意思是 a 后面跟着b，但是 b 不参与选择<br>?!n    匹配任何其后没有紧接指定字符串 n 的字符串。后面不跟着n<br>例后面不跟着 b 的 a</p>
+<p>下面是正则表达式讲义内容：<br>贪婪匹配，变成非贪婪匹配（能少就不多），在量词后面加个?<br>例</p>
+<p>注意：<br>1、想匹配空格，直接写 就可以了<br>2、想把选中的字符替换成$，直接写$是不行的，需要加上转义字符$<br>由于在替换文本里$有了特殊的含义（$代表反向引用），如果想要是替换$这个字符的话，需要写成$$，充当成转义字符<br>3、正则表达式要匹配一个反向引用的东西，写\<br>例</p>
+<p>4、在正则表达式里面要匹配问号？写\？    其余*+-（）星号加号减号括号都类似例<br>例下面是想去重，变成abc，先匹配一串，再取一例百度招聘 14 年最后一题：<br>给 var str =  “100000000000”;    这个数字科学计数法，每隔三位打个点<br>思路：找规律，从后往前查，每三位打个点，换个空进去【什么样的空？后面的数一定是 3 的倍数，(\d{3})+是 3 的倍数位个数字，这里面的东西一到多个，第一个/<br>后面的空后面加上正向预查，后面是 3 的倍数位个数字，$以什么结尾】空的后面跟着 3 的倍数位个数字并且以这个结尾。\B 非单词边界</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2020/03/11/js-basics-12-RegExp/" data-id="ck7mq4s3k00001ou1de1xarh2" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/blog/2020/03/11/js-basics-11-function/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">js-basics-11-function</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2020/03/">March 2020</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/blog/2020/03/11/js-basics-12-RegExp/">js-basics-12-RegExp</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2020/03/11/js-basics-11-function/">js-basics-11-function</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2020/03/11/js-basics-10-dom/">js-basics-10-dom</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2020/03/10/js-basics-9-es5/">js-basics-9-es5</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2020/03/10/js-basics-8-try-catch/">js-basics-8-try-catch</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/blog/" class="mobile-nav-link">Home</a>
+  
+    <a href="/blog/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/blog/fancybox/jquery.fancybox.css">
+
+  
+<script src="/blog/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/blog/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>
