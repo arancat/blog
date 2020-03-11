@@ -64,6 +64,108 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-js-basics-11-function" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2020/03/11/js-basics-11-function/" class="article-date">
+  <time datetime="2020-03-11T02:42:36.000Z" itemprop="datePublished">2020-03-11</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2020/03/11/js-basics-11-function/">js-basics-11-function</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>function<br>重点：事件处理程序的运行环境，如何解除事件处理程序，事件处理模型（冒泡，捕获），阻止默认事件，事件对象，事件委托，事件分类</p>
+<p>1、ele.onxxx = function (event) {}<br>程序 this 指向是 dom 元素本身（指向自己）</p>
+<p>、obj.addEventListener(type, fn, false);<br>程序 this 指向是 dom 元素本身（指向自己）</p>
+<p>解除事件处理程序<br>1、ele.onclick = false/‘’/null;    ==&gt;    解除 ele.onxxx = function (event) {}<br>2、ele.removeEventListener(type, fn, false);==&gt;解除 addEventListener(type, fn, false) 3、ele.detachEvent(‘on’ + type, fn);    ==&gt; obj.attachEvent(‘on’ + type, fn);<br>注:若绑定匿名函数，则无法解除<br>例用 div.onclick = null;解除事件，</p>
+<p>3、obj.attachEvent(‘on’ + type, fn);<br>程序 this 指向window<br>例让 obj.attachEvent 指向自己，function handle(){}里面是事件处理程序</p>
+<p>例只能执行一次的事件的写法</p>
+<p>4、封装兼容性的 addEvent(elem, type, handle);方法（必须会）<br>addEvent 是给一个 dom 对象添加一个该事件类型的处理函数例</p>
+<p>例 ele.removeEventListener(type, fn, false);    1、事件冒泡：</p>
+<p>结构上存在父子关系的元素，如果点击到子元素，会一级级向父元素传递这个事件<br>（从代码的角度是自底向上一层层冒泡的）<br>例加了 margin，只点黄色的，还是出现了 box,content,wrapper。所以与视觉无关</p>
+<p>test 如果填 function(){}别人就找不到他，就没办法清除，所以此时的函数体要写在外面<br>例 ele.detachEvent(‘on’ + type, fn);清除绑定时一摸一样的 obj.attachEvent(‘on’ + type,<br>fn);</p>
+<p>事件处理模型 — 事件冒泡、捕获事件处理的两个模型：事件冒泡、捕获（不能同时存在） 例</p>
+<p>2、事件捕获：（只有谷歌有，最新火狐有）</p>
+<p>2）IE 没有捕获事件<br> 一个对象的一个事件类型，只能存在一个事件处理模型（冒泡或捕获）<br>obj.addEventListener(type, fn, true);第三个参数为true 就是事件捕获<br>例点击黄的：先红的捕获事件并且执行，再绿的捕获事件并且执行，最后只执行事件黄的。捕获是把结构的最外面先抓住。最外面先捕获，再一层层向里面捕获，最里面的是按常规执行。<br>例把 false 改成 true，就变成了事件捕获<br>html 部分沿用左侧冒泡情况的代码，只把 false 改成 true 就变成事件捕获了</p>
+<p>只点了黄色区域，但是出现了 box,content,wrapper，往下漏了，就是事件冒泡</p>
+<p>思考：同一个对象的同一个事件类型，上面绑定了两个事件处理函数，一个符合冒泡，一个符合捕获，点击一个元素后，是先捕获，还是先冒泡？<br>3、触发顺序，先捕获，后冒泡</p>
+<p>取消冒泡和阻止默认事件<br>例不给 div 绑定事件处理函数，依然会冒泡（document 冒泡到 div 上）</p>
+<p>例 html 部分沿用上一页冒泡情况的代码</p>
+<p>例给 div 也帮个事件（点红色，也冒泡到 document）</p>
+<p>在每一个事件处理函数中【div.onclick=function(){}】，我们可以写一个形参（如 e），系统可以传递事件对象（记载了数据发生时的状态和信息）到这个参数里面去</p>
+<p>例    改变了冒泡和捕获的顺序</p>
+<p>1）W3C 标准 event.stopPropagation();但不支持 ie9 以下版本<br>例事件对象上有一个 event.stopPropagation();取消冒泡事件</p>
+<p>2）IE 独有 event.cancelBubble = true;【实际上谷歌也实现了】<br>例 ie 里面事件对象上有一个 event.cancelBubble = true;能取消冒泡事件</p>
+<p>这个的顺序是先捕获红色，再捕获绿色，boxBubble 黄色区域事件执行，box 黄色区域事件执行，冒泡到绿色，冒泡到红色（谁先绑定，谁先执行，boxBubble 先绑定， 所以先执行）<br>4、focus，blur，change，submit，reset，select 等事件不冒泡</p>
+<p>3）封装取消冒泡的函数 stopBubble(event)</p>
+<p>3）event.preventDefault(); W3C 标注，IE9 以下不兼容<br>例</p>
+<p>4）event.returnValue = false; 兼容 IE<br>例</p>
+<p>5）封装阻止默认事件的函数 cancelHandler(event);<br>例</p>
+<p>例浏览器点右键出菜单，是一个事件（默认事件）</p>
+<p>例 a 标签有一个跳转的默认时间，如何取消看下面</p>
+<p>2）return false;    兼容性非常好，以对象属性的方式注册的事件才生效（这是句柄的方式阻止默认事件，只有句柄的方式绑定事件才好使）<br>例</p>
+<p>ele.onxxx = function (event) {}是句柄的绑定方式，才能用 return false;</p>
+<p>2、事件源对象:（找事件源对象的方法） event.target    火狐独有的event.srcElement    Ie 独有的<br>这俩 chrome 都有<br>例事件源对象的兼容性写法</p>
+<p>事件委托<br>例我们给每个 li 绑定事件，要求点哪个 li 就输出哪个内容，这不涉及闭包问题</p>
+<p>上面的写法不好（如果是三千亿个 li 就没效率），不能动态，要用事件源和事件冒泡</p>
+<p>事件委托：利用事件冒泡，和事件源对象进行处理优点：<br>1.性能  不需要循环所有的元素一个个绑定事件<br>2.灵活  当有新的子元素时不需要重新绑定事件<br>例给每个 li 绑定事件，再增加 li 也能使用</p>
+<p>扫雷的雷也可以放 ul 上<br>作业：预习下面的三个词，写拖拽功能（鼠标按住方块跟着动，松开就不跟着走）<br>答案</p>
+<p>上面这个写法有问题，鼠标在方块的左上角，不在你点击他时候的位置</p>
+<p>思路：上面是把点击鼠标的点设置成方块的 left 和 top（就是把鼠标的点设置成了左顶点，这样就少了个距离），我们把这个距离算上就可以了，加上鼠标第一次点击时候的离方块上边和左边的距离再赋给左上角了<br>之前是把 div.onmousemove 写在div 上面，有一个 bug，我们按住鼠标迅速离开方块，方块就不会跟着动，一直按住鼠标，再一进去，又可以带着方块动了，是一个事件监听的问题（鼠标挪动频次大于事件监听频次），我们写成 document.onmousemove就可以了</p>
+<p>上面这个写的很粗糙，没有封装也没有绑定。document.onmousemove=function(){}这种写法是不可以的，要用 addEventListener 绑定。作业就是把上面绑定成函数，函数名叫 function drag (elem) {}<br>例</p>
+<p>面试问题，什么是事件捕获，一个是冒泡，一个是捕获 obj.addEventListener(type, fn, true);他所说的第二种捕获不是事件处理模型，而是一种真实的事件获取的过程，用于解决拖拽鼠标出方块的问题<br>仅在 ie 好使，利用 div.setCapture();会捕获页面上发生的所有事情，都获取到自己身上。对应的用 div.releaseCapture();释放。但是方法比较老旧，一般不用。</p>
+<p>例 click 不能监听右中</p>
+<p>4、如何解决 mousedown 和 click 的冲突</p>
+<p>click、mousedown、mousemove、mouseup、contextmenu、mouseover、mouseout、mouseenter 、 mouseleave<br>例 click=mousedown+mousemove</p>
+<p>这三个事件的触发顺序是mousedown，mouseup，click<br>例 contextmenu 右键取消菜单，mousemove 是鼠标移动的事件<br>例相对应 mouseover、mouseout 鼠标覆盖区域与 mouseenter 、mouseleave 鼠标离开但是 mouseenter 、mouseleave 是 html5 的，都是鼠标进去，出来发生的变化</p>
+<p>2、用button 来区分鼠标的按键，0/1/2<br>只有 mouseup、mousedown 两个能区分鼠标垫左右键<br>button 返回值，右键是 0，左键是 2，中间是 1<br>例</p>
+<p>事件练习作业<br>1、拖拽应用：实现拖拽正常拖，但是点击就正常跳转<br>思路：拖拽由 down+move+up，但是不管隔多久都算一个 click，可以理解成拖拽不等于点击 click。看时间差解决：按下+抬起的时间差&gt;多少，就能知道是拖拽了。答案：按下之后才绑定move 事件，抬起了 move 事件就解除</p>
+<p>2、应用 mousedown mousemove mouseup 3、随机移动的方块（完全随机）<br>思路：当把鼠标挪到方块里面去onmouseover 的时候，方块随机向八个方向挪动<br>4、mouseover<br>移动端 onmousedown 不能用，只能用 touchstart,touchmove,touchend</p>
+<p>1、keydown，keyup，keypress</p>
+<p>事件分类</p>
+<p>例 change 对比鼠标聚焦，或失去焦点的时，两个状态是否发生改变，如果两个状态没有改变就不触发，如果发生改变就触发</p>
+<p>2、触发顺序是 keydown &gt; keypress &gt; keyup</p>
+<p>keydown 可以响应任意键盘按键，keypress 只可以相应字符类键盘按键<br>检测字符类不准确，keypress 检测字符很准。但是 keydown 能监控所有，包括上下左右都能监控，但是 keypress 只能监视字符。<br>用法：如果你想监控字符类按键，并想区分大小写，就用 keypress，如果是操作类按键的话，就用 keydown（which：39 是给按键牌号 39，不是 asc 码）<br>2）keypress 返回ASCII 码，可以转换成相应字符<br>例连续按键盘按键的时候就是连续触发 keydown 和keypress，松开触发keyup</p>
+<p>注意：游戏触发设置在 keydown 上，机械键盘抬起速度快反馈力量大，对游戏没用<br>小写的 a 的 charCode 返回的是<br>例利用下面，把 Unicode 编码转成对应值</p>
+<p>二、文本操作事件<br>input，change，focus，blur</p>
+<p>例 focus，blur 聚焦和失去焦点</p>
+<p>三、窗体操作类(window 上的事件)    scroll，load<br>例 scroll 当滚动条一滚动，scroll 事件就触发了</p>
+<p>ie6 没 fixed 定位，就用 position 的 top=原来的 top+滚动条的位置来写。absolute 定位相对于文档定位，用absolute 定位模拟 fixed 定位，挪动距离加载absolute 的 top 上读到 js 的时候就阻断页面，所以必须把 js 写在下面才能把上面的东西读出来。<br>例 load 重要但是不用。window.onload 发生在什么时候</p>
+<p>利用了 onload 就能操作写在下面的 div 了，但是我们不能这样用。<br>理由：html 和 css 是一起解析的，在解析的时候会有 html 有 domTree，css 有 cssTree 生成（树形图的顶底是document，然后是html，然后是 head，body），两个树拼在一起是 renderTree。</p>
+<p>什么时候把节点放在树里？dom 节点解析，如确定是 img 标签就把他放到树里。（先解析完 img，同时开启一个线程异步的去下载里面的内容，后下载完）。<br>我们把 js 的 script 标签写在最下面的好处是，这些刚刚解析完 js 就能操作页面了， 就更快了。而 window.onload 要等整个页面解析完，下载完才能操作 js，才能触发事件（效率很差）。onload 能提醒我们什么时候整个页面解析完毕。在设计广告时，就要用 onload，等整个页面下载完了才开始用，但是onload 绝对用于主程序里面。</p>
+<p>小练习:fixed 定位 js 兼容版    //ie6 没有 fixed 定位，用 position:absolution 是相对于文档定位。模拟fixed 定位，跟着解决文档拖的问题。position-top= 原来的position-top</p>
+<ul>
+<li>滚动条的位置</li>
+</ul>
+<p>作业<br>1、完善轮播图，加按钮    //提示：用留的接口，加两个按钮，改参数<br>2、提(qie)取密码框的密码    //提示：监听键盘事件<br>3、输入框功能完善<br>4、菜单栏（二阶菜单栏）    //提示：先写一个 div，开始的时候 display：none，等鼠标挪上去，变成 display：block</p>
+<p>5、贪食蛇游戏    //提示：蛇头动，蛇尾怎么跟着动，控制蛇头操作就可以了，蛇尾的每一节跟着前一节动<br>6、扫雷游戏    //注意闭包，有个扩散算法。<br>二维数组就是数组里面套数组(像矩阵)，可以表示坐标点<br>arr[1][1]说的是第二行第二列，也就是 22</p>
+<p>可以尝试做：球击方块（板子）的游戏</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2020/03/11/js-basics-11-function/" data-id="ck7mq1njg0000e0u1bgmz24ly" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-js-basics-10-dom" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/blog/2020/03/11/js-basics-10-dom/" class="article-date">
@@ -750,176 +852,6 @@ for 循环
 
 
   
-    <article id="post-js-basics-1-type" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/blog/2020/03/10/js-basics-1-type/" class="article-date">
-  <time datetime="2020-03-10T14:59:23.000Z" itemprop="datePublished">2020-03-10</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2020/03/10/js-basics-1-type/">js-basics-1-type</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>JavaScript</p>
-<p>web 发展史<br>Mosaic，是互联网历史上第一个获普遍使用和能够显示图片的网页浏览器。于 1993<br>年问世。<br>1994 年 4 月，马克.安德森和 Silicon Graphics（简称为 SGI，中译为“视算科技”或“硅图”）公司的创始人吉姆·克拉克（Jim Clark）在美国加州设立了“Mosaic Communication Corporation”。<br>Mosaic 公司成立后，由于伊利诺伊大学拥有 Mosaic 的商标权，且伊利诺伊大学已将技术转让给 Spy Glass 公司，开发团队必须彻底重新撰写浏览器程式码，且浏览器名称更改为Netscape Navigator，公司名字于 1994 年 11 月改名为“Netscape<br>Communication Corporation”，此后沿用至今，中译为“网景”。<br>微软的Internet Explorer及Mozilla Firefox等，其早期版本皆以Mosaic 为基础而开发。微软随后买下Spy Glass 公司的技术开发出Internet Explorer 浏览器，而Mozilla Firefox 则是网景通讯家开放源代码后所衍生出的版本。<br>js 历史<br>JavaScript 作为 Netscape Navigator 浏览器的一部分首次出现在 1996 年。它最初的设计目标是改善网页的用户体验。<br>作者：Brendan Eich<br>期初JavaScript 被命名为 LiveScript，后因和 Sun 公司合作，因市场宣传需要改名<br>JavaScript。后来 Sun 公司被 Oracle 收购，JavaScript 版权归 Oracle 所有。</p>
-<p>js 的特有特色</p>
-<pre><code>编译型语言    解释性语言</code></pre><p>怎么做    通篇翻译后，生成翻译完的文件，<br>程序执行翻译后的文件    看一行翻译一行，不生成特<br>定文件<br>代表语言    C,C++    JS,PHP，python 带尖角号<br>优点    快(常用于系统，游戏)    可以跨平台<br>缺点    移植性不好（不跨平台，window 和<br>Linux 不能混用）    稍微慢点<br>js 是解释性语言：(不需要编译成文件）跨平台<br>java 先通过 javac，编译成.class 文件，通过 jvm（Java 虚拟机）进行解释执行<br>.java→javac→编译→.class→jvm→解释执行（java 可以跨平台）（java 是 oak 语言）</p>
-<link rel = “”>是异步加载
-单线程：同一时间只能做一件事——js 引擎是单线程
-（同一时间做很多事叫多线程）
-ECMA（欧洲计算机制造联合会）标注：为了取得技术优势，微软推出了 JScript， CEnvi 推出ScriptEase，与 JavaScript 同样可在浏览器上运行。为了统一规格 JavaScript兼容于 ECMA 标准，因此也称为ECMAScript。
-js 是轮转时间片
-
-
-<p>浏览器组成<br>1.shell 部分——用户能操作部分(壳)<br>2.内核部分——用户看不到的部分<br>1)渲染引擎（语法规则和渲染） 2)js 引擎<br>3)其他模块（如异步）</p>
-<p>js 引擎<br>2001 年发布 ie6，首次实现对 js 引擎的优化。<br>2008 年Google 发布最新浏览器Chrome，它是采用优化后的 javascript 引擎，引擎代号 V8，因能把 js 代码直接转化为机械码来执行，进而以速度快而闻名。<br>后 Firefox 也推出了具备强大功能的 js 引擎<br>Firefox3.5    TraceMonkey（对频繁执行的代码做了路径优化）<br>Firefox4.0    JeagerMonkey</p>
-<p>开始学习 js<br>js 三大部分 ECMAScript、DOM、BOM<br>如何引入 js?<br>1、页面内嵌<script></script>标签,写 head 里面也行,写 body 里面也行<br>例<body></p>
-<script type="text/javascript">    //告诉浏览器我们是 js
-</script>
-</body>
-2、外部 js 文件，引入<script src=“location”></script>
-例如：以 lesson.js 保存文件，再引入到html 中
-为符合 web 标准（w3c 标准中的一项）结构（html）、行为（js）、样式（css）相分离，通常会采用外部引入。
-一个文件中可以包括多个 css，js——不混用特殊写页面，大部分写在外部——不混用
-如果同时写了内部的 js 和外部的 js，那么是外部的 js 文件显示出来
-js 基本语法
-1、变量(variable)
-HTML，css 不是编程语言，是计算机语言，编程语言需要有变量和函数变量是存放东西，方便后续使用的框
-1）变量声明
-1.声明、赋值分解
-var a; 这个叫变量声明。我们向系统中申请了 var 这个框，命名叫a
-
-<p>下面是变量,例：var a = 10;<br>var b = 20; var c;<br>c = a + b;</p>
-<p>基本语法</p>
-<p>给 a 赋值 100，写作a =100，这里不是等号是赋值var a ；a =100；可以简化写成 var a=100；<br>2.单一var 声明法<br>var a,b,c,d;————单一 var 模式</p>
-<p>先运算等号右边的a+b，运算完后，再赋值给左边 c<br>先取值，再赋值<br>运算大于赋值的优先级<br>js 是动态语言，动态语言基本上都是解释性语言，解释性语言基本上都是脚本语言<br>js 是浮点型语言（带小数点）</p>
-<p>标准写法</p>
-<p>如写做：var a = 10；a=20;那么后面的 20 就会覆盖掉前面的 10<br>2）命名规则（用接近的英文单词）———— 起变量名一定要以英文语义化<br>1.变量名必须以英文字母、_、$ 开头<br>2.变量名可以包括英文字母、_、$、数字<br>3.不可以用系统的关键字、保留字作为变量名</p>
-<p>1、不可改变的原始值（栈数据）栈 stack Number,String,Boolean,undefined,null<br>已经放进去的值不可改变，只会改房间编号为 null(硬盘原理) Number 数字,例 var a = 123;<br>String 字符串,语言放双引号里，例 var a=”语言”，““是空串 Boolean 布尔数字,就两个值，false，true<br>undefined 是        ，表示还没赋值,仅一个值 underfined null 代表空，    用，用空值来覆盖</p>
-<p>例 var a =10; var b = a;<br>a = 20;<br>document.write(b);<br>答案：10<br>原始值是我把一个值放到另一个值里面，改了第一个值，第二个值不变<br>2、引用值（堆数据）大致上放堆heap 里面array 数组, Object, function … data,RegExp 正则var arr = [1,2,3,4,5,false,”abc”];    //这是数组例：var arr = [1];<br>var arr1 = arr; arr.push(2); document.write(arr1);<br>答案：arr 是 1,2。arr1 是 1,2<br>引用值是把第一个值放到第二个值里面，改第一个值，第二个值也改变<br>js 由值决定类型。原始值和引用值唯一的不同是赋值形式不同</p>
-<p>js 语句基本规则<br>1、语句后面要用分号结束“；”但function test(){}，for(){}，if(){}后面都不用加分号 2、js 语法错误会引发后续代码终止，但不会影响其它 js 代码块<br>错误分为两种<br>1）低级错误（语法解析错误），不能写中文<br>2）逻辑错误（标准错误，情有可原，错的那个执行不了）<br>3、书写格式要规范，“= + / -”两边都应该有空格<br>js 运算符<br>一、运算操作符<br>+</p>
-<p>例 var a =  “a”+ true + 1;    //打印 atrue1<br>例 var a = 1 +  “a”  + 1 + 1;    //打印 1a11<br>例 var a = 1 + 1 +  “a” + 1 + 1;    //打印 2a11，从左向右运算例 var a = 1 + 1 +  “a”  +( 1 + 2);        //打印 2a3</p>
-<p>var a = 10;var b =a；是 a 先取出 10，copy 一份放到 b 里面，改变 a 的值，b 的值是不变的，再把 a=20;时 b 的值还是 10，不发生改变<br>var arr = [1,2];var arr1 =arr;arr.push(3);<br>答案：这往[1,2]放 3，arr 和 arr1 都是[1,2,3]<br> 引用值是在栈内存里面放堆的地址，拷贝的也是地址，所以改变 arr，arr1 也变了<br>var arr = [1,2]; var arr1 =arr; arr = [1,3]; document.write(arr1)<br>答案：arr = [1,3];是新建了一个新的房间。arr1 是 1,2,现在是插入新引入值”房间”,<br>会在堆里面重新申请一间房，并指向新房间</p>
-<p>例 var a = 0 – 1；    //等于-1<br>例 var a = 2 * 1；    //等于 2<br>例 var a = 0 / 0；    //答案是 NaN，应该得出一个数字类型的数，但是没法表达，就用NaN (NaN 是Not a Number 非数，不是数，但是是数字类型<br>例 var a = 1 / 0;    //是 infinity<br>例 var a = -1 / 0;    /是-infinity<br>%，摩尔，模，是取余数的意思<br>例 var a =5%2    //5%2 是五除二的余数，商二余一<br>例 var a =5%1    //是五除一的余数，结果是 0<br>例 var num = 1 % 5;    //意思是 1 除以 5 的余数。商 0 余 1<br>例 var a =4%6    //是四除六的余数，结果是 4<br>例 var a = 4;a % = 5;document.write(a);    // 4<br>例 var a = 0;a % = 5;document.write(a);    //0<br>例 var a = 10;a %= 2;document.write(a);    //0<br>例 var a = 3;a % = 4;    //4<br>“-”，“*”，“/“，“%”，”=“，“()”<br>优先级”=“最弱【赋值符号优先级最低】，”()”优先级较高</p>
-<p> “++”，“- -”，”+=“，“-=”，“/=“，“*=”，“%=”<br>++<br>例 var a = 10;    a = a + 1;    //结果 11<br>例 var a = 1;<br>a = a + 1;写成 a ++是一种简化形式“++”，是自身加一，再赋值给自身 a++是 a=a+1 的简化形式<br>例 var a =10；document.write(++a );document.write(a);    //答案 11；11<br> 是先执行++，再执行本条语句 document.write(++a)<br>例 var  a =1；document.write(a ++);document.write(a);    //答案 1；2。是先执行<br> 语句(document.write(a))，再++，所以第一次打印的还是 a，第二次打印 a++后的值例 var a =10；var b=++a -1+a++;document.write(b +  “  ” + a)    //答案 21    12<br> 先++a，这个时候 a=11，再-1，再加 a，b 就是 21，最后++，a 就是 12<br>赋值的顺序自右向左，计算的顺序自左向右（按数学来）<br>例 var a =1；var b = a ++ + 1；document.write(b)；    //答案 2，先执行 var b =a+1， 再 a++<br>例 var a =1；var b = a ++ + 1；document.write(a)；document.write(b)；        //答案 2，2 例 var a =1；var b = ++a + 1；document.write(a)；document.write(b)；    //答案 2，3 例 var i = 1;var a = i++;    //答案 a = 1;    此时 i 先将值 1 赋给 a,然后自己+1，i=2; var b = ++i;    //答案 b = 3；此时 i 先自己+1 为 3.再给 b 赋值，b=3;<br>–<br>“- -”，是自身减一，在赋值给自身<br>例 var a = 1;var b = a– + – a;document.write(b);    //答案 0， 先执行–a;此时 a 变成 0，然后第一个a 也变成 0，那么 b = 0– + –a<br>例 var a = 1;var b = –a + –a;document.write(b);    //答案-1<br>例 var a = 1;document.write(a++);document.write(a);    //答案 1；2 例 var a = 1;document.write(++a);document.write(a);    //答案 2；2 例 var a =1; var b = a ++ +1;document.write(b);        //答案 2<br>a 写在后面就后运行，先计算 a+1=2 赋值给b 后再++<br>例 var a = 1;var b= ++a + 1;document.write(a);document.write(b);    //答案 2；3</p>
-<p>例 var a =10;a ++;a ++;a ++;加十个<br>简化写法：a +=10;也是 a = a+10;<br>例 var a =10;a += 10 + 1;    //答案 21<br>例 var a = 1;a = a + 10;等于a+=10 a++是 a +=1 的写法<br>/=<br>例 var a=10;a/=2;    //答案 5，是除二赋给自身的意思</p>
-<p>*=<br>例 var a =10;a *=2;    //答案：20，是乘二赋给自身的意思<br>%=<br>例 var a=10;a%=2;    //答案：0， 10 能整除 2,余数是 0,取余，余数赋给自身。例 var a=3;a%=4;        //答案：3，3 除以 4，余数为 3，余数赋给自身。<br>例 var a=0;a%=4;        //答案：0，0 除以 4，余数为 0，余数赋给自身。例 var a = 1;a% =10;    //答案：1，1 除以 10，余数为 1，余数赋给自身。作业：<br>1、写出打印结果<br>var a =(10 * 3 – 4 / 2 + 1)%2,b=3;b %= a + 3;<br>document.write(a++); document.wtite(“<br>”); document.write(–b);<br>2、var a =123; var b =234;经过计算交换 a，b 的值<br>作业答案<br>1、document.write(a++);是 1（先打出 1 再++）<br>document.write(–b);是 2<br>b % =a + 3,3 的模等于 4，除不开再赋值给 b，b 还是 3<br>2、方法一普通方法：var c = a; a = b; b = c;document.write(a ,b);<br>方法二 a = a + b; b = a – b; a = a –b; document.write(a ,b);<br>二、比较运算符<br>1、“&gt;”，”&lt;”，”==”，“&gt;=”，“&lt;=”，”!=”比较结果为boolean 值<br>但凡是运算符，都是要有运算的用到布尔值，true 或false<br>字符串的比较，比的是ASCII 码（七位二进制 0000000）</p>
-<blockquote>
-<p>， &lt;<br>例 var a = “a”&gt;”b”;document.write(a);    //答案是 false<br>例 var a = 1 &gt; 2;document.write(a);    //答案是 false<br>例 var a = 1 &lt; 2;document.write(a);    //答案是 true<br>例 var a = “1”&gt;”8”;document.write(a);    //答案是 false<br>例 var a = “10”&gt;”8”;document.write(a);    //答案 false，不是十和八比，是字符串一零和八比，先用开头的一和八比，比不过就不看第二位了；一样的就拿零和八比<br>例 var a = 123;document.write(a);    //答案 false<br>运算结果为真实的值<br>= =，等不等于<br>例 var a = 1 == 2;    //答案是说 1 等不等于 2，因为 1 肯定不等于 2，所以值为 false<br>例 var a = NaN == NaN;    //答案是 false，NaN 不等于任何东西，包括他自己</p>
-</blockquote>
-<p>例 var a = undefined == underfined;    //答案是 true<br>例 var a = infinity == infinity;    //答案是 true<br>例 var a = NaN == NaN;    //答案是 false。非数 NaN 是不等于自己的<br>NaN 得不出数，又是数字类型，就是 NaN</p>
-<blockquote>
-<p>=，&lt;=<br>!=是否不等于，非等比较结果为 boolean 值：true 和false<br>三、逻辑运算符：“&amp;&amp;”，“||”，“!“运算结果为真实的值<br>  “&amp;&amp;”与运算符</p>
-</blockquote>
-<p>3 在二进制中，是 11    1    1<br>运算结果            0    1<br>“||”或运算符<br>例 var num = 1 || 3;    //答案 1<br>例 var num = 0 || 3;    //答案 3<br>例 var num = 0 || false;    //答案是 false<br>看第一个表达式是否为真，如果为真，则返回第一个值，碰到真就返回<br>如果第一个表达式是假，就看第二个表达式，如果第二个是最后一个，就返回第二个的值<br>关注真假的说法：全假才为假，有一个真就为真</p>
-<p>两个表达式：先看第一个表达式转换成布尔值的结果是否为真，如果结果为真，那么它会看第二个表达式转换为布尔值的结果，然后如果只有两个表达式的话，只看看第二个表达式，就可以返回该表达式的值了，如果第一位布尔值为 false，不看后面的，返回第一个表达式的值就可以了<br>运算符就是要求结果<br>例 var a = 1 &amp;&amp; 2;    //答案 2，如果第一位 1 为真，结果就为第二位的值 2<br>例 var a = 1 &amp;&amp; 2 + 2;    //答案 4，如果 1 为真，结果就为 4<br>例 var a = 0 &amp;&amp; 2 + 2;    //答案 0<br>例 var a = 1 &amp;&amp; 1 &amp;&amp; 8;    //答案 8，先看第一个是否为真，为真再看第二个， 中途如果遇到 false，那就返回 false 的值<br>例 var a =1 + 1 &amp;&amp; 1 – 1;document.write(a);    //答案 0<br>如果是三个或多个表达式，会先看第一个表达式是否为真，如果为真，就看第二个表达式，如果第二个也为真，就看第三个表达式（如果为真就往后看，一旦遇到假就返回到假的值），如果第三个是最后一个表达式，那就直接返回第三个的结果<br>如果第一个是假，就返回第一个值，当是真的时候就往后走，一旦遇到假，就返回例：2&gt;1 &amp;&amp; document.write(‘成哥很帅’)    //意思是如果 2 大于 1，那么就打印成哥很帅，如果前面真才能执行后面的（相当于短路语句使用）<br>&amp;&amp;与运算符是有中断作用的，当短路语句使用(如果。。那么。。)<br>例 var data = …;    //执行一个语句，会用到 data data&amp;&amp;执行一个语句全用到 data<br>例 data &amp;&amp; function(data);<br>&amp;与运算    我们一般不用<br>例 var num = 1 &amp; 2;document.write(num);    //答案 0<br>例 var num = 1 &amp; 1;document.write(num);    //答案 1<br>例 var num = 1 &amp; 3;document.write(num);    //答案 1</p>
-<p>例 var num = 0 || false || 1;document.write(num);    //答案 1<br>例 div .onclick = function(e){<br>非 IE 浏览器直接取e 值<br>var event = e;<br>IE 浏览器存在 window.event;<br>}<br>写成下面这样就解决了兼容性。在所有的浏览器中都好使<br>div .onclick = function(e){var event = e || window.event;}<br>“!“非运算符，否的意思。<br>先转成布尔值，再取反<br>例 var a = ! 123;document.write(a);  //答案 false。123 的布尔值是 true，取反是 false 例 var a = ! “”;document.write(a);  //答案 true。空串””布尔值是 false，取反是 true 例 var a = ! !“”;document.write(a);    //答案 false，取反后，再反过来，结果不变例 var a = true;a =!a;document.write(a) //答案 false，自身取反，再赋值给自身<br>！=非等于是表达他们到底等不等的<br>四、被认定为false 的值：转换为布尔值会被认定为false 的值undefined，null，NaN， “”（空串），  0，  false<br>条件语句<br>if(条件判断){<br>当条件成立时，执行里面的执行语句<br>}<br>当 if 的条件成立时，才能执行{}内的语句<br>当条件转化为布尔值，如果为true 就执行；如果为false 就不执行例 if(1 &lt; 2){document.write(“老邓很丑”);}<br>例 if ( 1 &gt; 0 &amp;&amp; 8 &gt; 9){}<br>&amp;&amp;放在 if 中的，全真才为真，&amp;&amp;是并且的意思</p>
-<p>例 if ( 1 &gt; 0 || 8 &gt; 9){}<br>||放在 if 中是或者的意思，有一个是真就可以了</p>
-<p>IF 和&amp;&amp;的互相转化<br>if (1 &gt; 2) {<br>document.write.(‘a’);</p>
-<p>}<br>上面与右边效果完全一样 1 &gt; 2 &amp;&amp; document.write(‘a’);<br>&amp;&amp;和 II 比较常用在条件判断中</p>
-<p> 格式 for (var i = 0; i &lt; 10; i++) {<br>     }</p>
-<p>for 是关键字，（）括号里面三个语句用两个分号隔开，{}里面是循环体打印十个 a，写成：</p>
-<p>执行顺序如下：<br>(1)var i= 0;<br>(2)if(i &lt;10){<br>document.write(‘a’)</p>
-<p>//不能写 90&lt;score&lt;100,这样写会先比 90&lt;score,等于true 以后再跟 100 比<br>//else if 满足了第一条就不看第二条了，用 else if 要满足条件与条件之间互斥，不能有交叉点。除了上面所有以外的。else if 除了这个以外，满足第一个就不看了，不满<br> 足就看后面的<br>else if 除了这以外在看这个满不满足。满足条件后就不看了下面的写法不够简洁<br>else 是上面这个条件的补集</p>
-<p>简洁写法见右边</p>
-<p>}<br>把条件判断放到 if 里面,条件判断成立，就执行{}中间的执行体<br>(3)i++<br>看 i++，此时 i 变成 1，i=1； (4)if(i &lt;10){<br>document.write(‘a’)<br>}<br>把条件判断放到 if 里面,条件判断成立，就执行{}中间的执行体<br>(5)i++<br>看 i++，此时 i 变成 1，i=1；<br>——————如此反复<br>先执行一遍(1)，<br>判断(2)执行语句成不成立，条件成立就执行(3),判断(2)执行语句成不成立，条件成立就执行(3),<br>……当有一次判断不成立，就停止</p>
-<p>因为看的是执行顺序，写外面也可以，执行顺序是一样，打印十个 a，也可以写成：</p>
-<p>打印十个 a，也可以写成：</p>
-<p>例 for 循环中的三句只能写一句，打印 100 个数：</p>
-<p>例 for 循环中的函数体里面只能写一句，打印 100 个数：</p>
-<p>三、while, do while<br>while 循环</p>
-<p>例打印 0-9</p>
-<p>求 0-9 的和：</p>
-<p>例打印 100 以内能被 3 整除，或者能被 5 整除，或者能被 7 整除的数：</p>
-<p>用 for 循环打印一百个数：</p>
-<p>while 循环是 for 循环的简化版 for(  ； ； ){}，while 循环底层机制是for 循环。for ( ; 只在这一部分写，前后不写 ; ){}</p>
-<p>上下这两个完全相等</p>
-<p>死循环 never-ending loop 无限循环</p>
-<p>例打印一百以内，7 的倍数就输出</p>
-<p>例打印一百以内，7 的倍数或逢 7 就输出</p>
-<p>do while 循环<br>do while 是不管满不满足条件都会先执行一次，再判断成不成立，如果成立才会执行<br> 第二次，不成立就停止    一般没人用<br>do{</p>
-<p>2.</p>
-<ol start="3">
-<li>第六位是四次运算，第七位是五次运算（第三位=第一位+第二位）<br>第一次计算的完整过程是把第一位和第二位相加，等于第三位，并且把游标向后挪一位。下面 for（里面的 i 是控制循环圈数的）</li>
-</ol>
-<p>document.write(‘a’); i ++;<br>}while(i &lt; 10)</p>
-<p>作业：（先找规律，再写出来）<br>提示：var n = parseInt(window.prompt(‘input’)); JS 可以进行浮点计算<br>1.计算 2 的n 次幂，n 可输入，n 为自然数。<br>2.计算n 的阶乘，n 可输入。即 5！=5<em>4</em>3<em>2</em>1，最好写个 if<br>3.著名的斐波那契额数列(这个数列从第 3 项开始，每一项都等于前两项之和)<br>1 1 2 3 5 8 输出第 n 项<br>4.编写一程序，输入一个三位数的正整数，输出时反向输出。如：输入 456,输出 654<br>5.输入 a,b,c 三个数字，打印出最大的。<br>6.打印出 100 以内的质数（从 1 除到他本身，只能有两个因数）<br>作业答案:<br>1.原有结果*2,mul 是存上一个数的结果</p>
-<ol start="4">
-<li><p>取模除减。先把 456 提出出来，再反过来。6 是取模除减%10 余 6。再用 456 减 6， 剩下 450；450%100 是 50，50 除以 10，取出 5，450-50 剩下 400；400%100，再反着乘一遍，十位乘以 10，百位乘以 100。（中间的位数其实可以不动）</p>
-</li>
-<li></li>
-<li><p>(1)有一个判断质数的算法(2)看看每一个 i 是不是质数<br>(3)从自身开始除一直除到 1，只能被自己和 1 整除，只能整除 2 次</p>
-</li>
-</ol>
-<p>以下是最简单的方法：从 1 到 10 能整除，除平方数以下的</p>
-<p>用 console.log(a);在控制台输出，看看a 被定义了没有<br>条件语句补充</p>
-<p>switch 找到满足要求的语句后，后面的语句虽然不判断了，但是也会执行出来<br>加个 break，就可以终止 swich case 语句<br>例</p>
-<p>例 if( score == 90){}else if ( score == 100){}<br>例</p>
-<p>一、switch case 条件判断语句<br>if(条件判断) switch(条件){<br>case 写条件：里面判是否相符：<br> 如果相符合就执行 case 后面的语句比如 console.log(‘a’)<br>}<br>switch 不负责任，如果判断了 a 是符合条件的，也会把后面的连带打印出来<br>加个 break，就可以终止语句</p>
-<p>简化写法</p>
-<p>例当 i 是 7 的倍数，或尾数是 7 的时候，不打印<br>for ( var i = 0; i &lt; 100; i++){<br>if( i % 7 == 0 || i % 10 == 7){<br>}else{ console.log(i);<br>}<br>}<br>下面写法更好</p>
-<p>continue 终止本次循环，来进行下一次循环</p>
-<p>例</p>
-<p>break 终止的是 while，对 if 没有影响例从 0 开始加，加到 100 以上就停止</p>
-<p>三、continue 继续<br>终止本次循环，后面的都不执行了，来进行下一次的循环<br>// js 里面是没有 goto 的，c 语言里面有</p>
-<p>例 var arr = [1,2,3,4,5,6,7,”abc”,undefined];<br>arr [0]  代表查数组的第一位，因为数字是从 0 开始的算的<br>arr [0] = 3;  是指把数组的第一位改成 3，显示 3,2,3,4,5,6,7, ”abc”,undefined arr.length;是数组的长度，有多少位就有多少<br>console.log(arr.length);    //答案是 8 位<br>例：利用 for 循环把数组中的每一位都拿出来——遍历</p>
-<p>例：把数组中的每一位都改成 1</p>
-<p>例：把数组中的每一位都加 1</p>
-<p>二、对象 object<br>面向对象的编程方法<br>var obj = {<br> 里面存属性和方法<br>key 属性名：value 属性值;<br>}<br>在{}面用。属性与属性之间用逗号隔开<br>//属性值可以双引号或单引号；属性名是为了方便找到他，只是一个辅助<br>例</p>
-<p>console.log(deng.lastName);    //取值方式 deng.lastName<br>赋 值 deng.lastName = “old deng”;<br>console.log(deng.lastName);<br>编程形式的区别<br>1.面向过程，如c<br>第一步干嘛，第二步干嘛<br>2.面向对象（对象 object）<br>现在 js 是一半面向过程，一半面向对象，前面学的都是面向过程</p>
-<p>typeof 能返回的六种数据类型（区分数字类型）<br>number、string、boolean、undefined、object、function<br>例 var num = 123;console.log(typeof(num));    //返回 number<br>写成 console.log(typeof    num );也可以不过最好加括号<br>例 var num = {}; console.log(typeof(num));    //泛泛的引入值都返回 object 例 var num = [];console.log(typeof(num));    //泛泛的引入值都返回 object 例 var num = null;console.log(typeof(num));        //答案 null 返回 object，最早是代替空对象的<br>例 var num = undefined;console.log(typeof(num));    //答案返回 undefined<br>例 var num = fuction(){};console.log(typeof(num));    //  答案返回 function</p>
-<p>类型转换<br>例 var num = 1 +“1”;    //显示 11<br>例 var num = 1 *“1”;console.log(typeof(num) +  “:” + num);    //显示 number:1<br>例 var num = 1 -“1”;console.log(typeof(num) +  “:” + num);    //显示 number:0<br>例 var num = “2” -“1”;console.log(typeof(num) + “:” + num); // 显 示 number:1 例 var num = “2” *“1”;console.log(typeof(num) + “:” + num); // 显 示 number:2 以上例子说明 js 有类型转换<br>一、显示类型转换<br>Number(mix) 是想把里面的东西转换成数字<br>例 var num = Number(‘123’); console.log(typeof(num) + “:” + num);<br>答案显示 Number:123，把字符串类型的 123 转换成了 number 类型例 var demo = “123”;<br>var num = Number(demo); console.log(typeof(num) + “:” + num);<br>答案显示 Number:123，上面那一行的 Number 是为了把()里面转换成数字类型<br>例 var demo = true;<br>var num = Number(demo); console.log(typeof(num) + “:” + num); 答案显示 Number:1<br>例 var demo = false;<br>var num = Number(demo); console.log(typeof(num) + “:” + num); 答案显示 Number:0<br>例 var demo = null;<br>var num = Number(demo); console.log(typeof(num) + “:” + num); 答案显示 Number:0<br>例 var demo = undefined;<br>var num = Number(demo); console.log(typeof(num) + “:” + num); 答案显示 Number:NaN<br>例 var demo = “abc”;<br>var num = Number(demo); console.log(typeof(num) + “:” + num); 答案显示 Number:NaN<br>例 var demo = “-123”;</p>
-<p>var num = Number(demo); console.log(typeof(num) + “:” + num); 答案显示 Number:-123<br>例 var demo = “123abc”;<br>var num = Number(demo); console.log(typeof(num) + “:” + num); 答案显示 Number:NaN<br>parseInt(string,radix)<br>parse 是转化，Int 是整型，整数，目的是把里面转换成整数<br>例 var demo =”123”;<br>var num = parseInt(demo); console.log(typeof(num) + “:” + num); 答案显示 number:123<br>例 var demo = true;<br>var num = parseInt(demo); console.log(typeof(num) + “:” + num); 答案显示 number: NaN<br>例 var demo = false;<br>var num = parseInt(demo); console.log(typeof(num) + “:” + num); 答案显示 number: NaN<br>例 var demo = 123.9;<br>var num = parseInt(demo); console.log(typeof(num) + “:” + num);<br>答案显示 number: 123，此处是直接去掉小数，不是四舍五入<br>例 var demo = “10”;<br>var num = parseInt(demo ,16); console.log(typeof(num) + “:” + num); 答案显示 number: 16<br>var num = parseInt(demo ,radix);    //radix 是基底的意思<br>radix 写成 16，系统会认为是以 16 进制为基底， 10（一零）是 16 进制的一零，是以 16 进制为基底，把他转成为 10 进制的数字（就是 16），上面是以目标进制为基底，转换成十进制（radix 范围是 2-36）<br>例 var demo = “3”;<br>var num = parseInt(demo ,2); console.log(typeof(num) + “:” + num);<br>答案显示 number: NaN</p>
-<p>例 var demo = “b”;<br>var num = parseInt(demo ,16); console.log(typeof(num) + “:” + num); 答案显示 number: 11<br>例 var demo = “123abc”;<br>var num = parseInt(demo); console.log(typeof(num) + “:” + num); 答案显示 number: 123<br>例 var demo = “100px”;<br>var num = parseInt(demo); console.log(typeof(num) + “:” + num); 答案显示 number: 100<br>parseInt 从数字类开始看，看到非数字类为止，返回原来的数<br>parseFloat(string) parseFloat(string)转换成浮点数字，就是正常小数例 var demo = “100.2”;<br>var num = parseFloat (demo); console.log(typeof(num) + “:” + num); 答案显示 number: 100.2<br>例 var demo = “100.2.3”;<br>var num = parseFloat (demo); console.log(typeof(num) + “:” + num); 答案显示 number: 100.2<br>例 var demo = “100.2abc”;<br>var num = parseFloat (demo); console.log(typeof(num) + “:” + num); 答案显示 number: 100.2<br>parseFloat 从数字类开始看，看到除了第一个点以外的非数字类为截止，返回前面的数<br>toString<br>例 var demo = 123;<br>var num = demo.toString(); console.log(typeof(num) + “:” + num);<br>答案显示 string: 123。相当于把 123 转换字符串。<br>想把谁转换成字符串，就写成谁.toString，上面是想把 demo 转换成 toString，写成<br>demo.toString</p>
-<p>例 var demo = undefined; var num = demo.toString();<br>console.log(typeof(num) + “:” + num);<br>答案显示报错，undefined 和 null 不能用 toString</p>
-<p>Boolean()转换成布尔值false 和 true<br>例 var demo = “”;<br>var num = String (demo);</p>
-<p>Boolean()</p>
-<p>例 var demo = 123;<br>var num = demo.toString(8); console.log(typeof(num) + “:” + num); 答案 173，把 123 转成为八进制<br>这里的 radix 意思是以十进制为基底，转换成目标进制（即 8 进制）<br>例 var demo = 10;<br>var num = demo.toString(8); console.log(typeof(num) + “:” + num); 答案 12<br>例 var demo = 20;<br>var num = demo.toString(8); console.log(typeof(num) + “:” + num);<br>答案 24。以十进制为基底，把 20 转换成 8 进制，就是 24<br>例给你一个二进制的数，转换成十六进制，是先从二进制到十进制再到十六进制</p>
-<p>console.log(typeof(num) + “:” + num);<br>答案显示 boolean: false</p>
-<p>二、隐式类型转换隐式类型转换是跟你转换了也不知道<br>隐式类型转换内部隐式调用的是显示的方法</p>
-<p>isNaN ();<br>isNaN ();当你把一个数放到()里，它能判断是不是NaN，先比括号里面的放到 number<br> 里面转换，然后返回来<br>例 console.log(isNaN(NaN);    //答案 true<br>例 console.log(isNaN(“123”);    //答案 false</p>
-<p>var num = 10101010;</p>
-<p>例 console.log(isNaN“(</p>
-<p>abc”);    //答案 true。会调用 number，先把“abc”</p>
-<p>var test = parseInt(num, 2); console.log(test.toString(16));<br>答案 aa<br>例 var num = 10000;<br>var test = parseInt(num, 2); console.log(test.toString(16));<br>答案 10</p>
-<p>String(mix)</p>
-<p>放 number 里面转换，通过number 的转换再和NaN 比对，如果相等就是 true<br>例 console.log(isNaN(null);    //答案 false，在 number 里面放 null 是 0，不是 NaN<br>例 console.log(isNaN(undefined);    //答案 true<br>++/–（加加减减）    +/-（一元正负）<br>例 var a = “123”;<br>a ++;<br>答案 124，++这个符号放到这里，还没运算之前，先把前面的 a 转换成number 的 123<br>例 var a = “abc”;</p>
-<p>String(mix)转换成字符串，写什么都成了字符串<br>例 var demo = 123.234;<br>var num = String (demo); console.log(typeof(num) + “:” + num); 答案显示 string: 123.234<br>例 var demo = undefined;<br>var num = String (demo);<br>console.log(typeof(num) + “:” + num);<br>答案显示 string: undefined</p>
-<p>a ++;<br>答案 NaN<br>+/-（一元正负）<br>+a;-a;正 a 和负 a 都会变换成数字例 var a =+”abc”;<br>console.log(a + “:” + typeof(a));<br>答案 NaN:number。尽管转换不成数字，也会转换成数字类型，因为里面隐式的调用<br>了一个 number</p>
-<p>+</p>
-<p> 变成字符串<br>例 var a = “a” +1<br>console.log(a + “:” + typeof(a));</p>
-<p><em>和%    乘和模都会转换成 number.<br>例 var a = “1” *1;    console.log(a + “:” + typeof(a));<br>答案 1：number<br>例 var a = “a” *1;    console.log(a + “:” + typeof(a));<br>答案 1：number，先是 number(“a”)的结果乘以 number(1)的结果，最后是 NaN</em>1， 还是NaN，但是数据类型是 number</p>
-<p>与或非，都是有类型转换的，不过是返回的是表达式的值，不是隐士类型转换的值， 但是判断是一个类型转换的值</p>
-<p>例 var a =1 &gt;  “2”;    console.log(a + “:” + typeof(a));<br>答案 false:boolean，有数字相比较的，就会隐士类型转换成数字类型例 var a =”3” &gt; “2”;    console.log(a + “:” + typeof(a));<br>答案这个没类型转换，这个比的是ASCⅡ<br>例 var a =”3” &gt; 2;    console.log(a + “:” + typeof(a));<br>答案 true：boolean 会转换成数字，因为数字优先</p>
-<p>例 var a = 1 ==  “1”;    console.log(a + “:” + typeof(a));<br>答案 true:boolean，也有隐士类型转换<br>例 var a = 1 == true;    console.log(a + “:” + typeof(a));<br>答案相等<br> ！=也是这样<br>特殊东西，在控制台操作<br>例 false&gt;true    //答案 false，会先转换成数字，0&gt;1 当然是错的例 2&gt;1&gt;3        //答案 false<br>例 2&gt;3&lt;1    //答案 true<br>例 10&gt;100&gt;0    //答案 false<br>例 100&gt;10&gt;0    //答案 true<br>以上都是挨个算的，先看前面的是 true 还是 false，再和后面的比，不是顺着下来<br>例 undefined&gt;0    //答案 false<br>例 undefined==0    //答案 false</p>
-<p>例 undefined&lt;0    //答案 false<br>例 null&gt;0    //答案 false<br>例 null==0    //答案 false<br>例 null&lt;0    //答案 false<br>例 undefined == null    //答案 true<br>例 NaN ==NaN    //答案 false，NaN 是唯一一个连自己都不等于的<br>三、不发生类型转换<br>===绝对等于（三个等号）    !==绝对不等于<br>例 1 === 1    //答案 true<br>例 1 ===  “1”    //答案 false<br>例 1 !== “1”    //答案 true<br>例 1 !== 1    //答案 false<br>例 NaN =NaN    //答案 false 特殊的<br>例 console.log(a);    //如果定量没定义就直接访问，就 a is not defined 报错； 有一种特殊情况，当且仅当把未定义的变量放到 console.log(typeof(a));里面就访问， 不报错，返回 undefined<br>例 console.log(typeof(a));    //答案 undefined，这个 undefined 是字符串例 console.log(typeof(typeof(a)));        //答案 string。console.log(typeof(typeof(a))); 可以先解析成 console.log(typeof(“undefined”));再返回一次就是 string 字符串<br>上面考的是 typeof(a)返回的六种类型的值（number、string、boolean、undefined、<br>object、function）都是 undefined 字符串作业<br>例 alert(typeof(a));    //返回 string<br>例 alert(typeof(undefined));    //返回 string，undefined<br>例 alert(typeof(NaN));    //返回 number<br>例 alert(typeof(null));    //返回 object<br>例 var a = “123abc”;    //返回 string<br>例 alert(typeof(+a));    //返回 number，NaN<br>例 alert(typeof(!!a));    //返回 boolean<br>例 alert(typeof(a +  “”));    //返回 string<br>例 alert(1 ==  “1”);    //显示 true<br>例 alert(NaN == NaN);    //显示 false<br>例 alert(NaN == undefined);    //显示 false<br>例 alert(  “11” + 11);    //显示 1111<br>例 alert( 1 === “1”);    //显示 false<br>例 alert(parseInt(“123abc”));    //显示 123【parseInt 是截断数字】</p>
-<p>例 typeof(typeof(a));    //返回 string<br>例 var num = 123123.345789;alert(num.toFixed(3));<br>答案 123123.346【toFixed(3)是保留三位小数的意思，四舍五入】提示：<br>alert(‘a’);就是弹出框，相当于 console.log</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/03/10/js-basics-1-type/" data-id="ck7m0z0hi0000awu1aldpeaeo" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
 
 
   <nav id="page-nav">
@@ -956,6 +888,10 @@ var a; 这个叫变量声明。我们向系统中申请了 var 这个框，命�
       <ul>
         
           <li>
+            <a href="/blog/2020/03/11/js-basics-11-function/">js-basics-11-function</a>
+          </li>
+        
+          <li>
             <a href="/blog/2020/03/11/js-basics-10-dom/">js-basics-10-dom</a>
           </li>
         
@@ -969,10 +905,6 @@ var a; 这个叫变量声明。我们向系统中申请了 var 这个框，命�
         
           <li>
             <a href="/blog/2020/03/10/js-basics-7-array/">js-basics-7-array</a>
-          </li>
-        
-          <li>
-            <a href="/blog/2020/03/10/js-basics-6-this/">js-basics-6-this</a>
           </li>
         
       </ul>

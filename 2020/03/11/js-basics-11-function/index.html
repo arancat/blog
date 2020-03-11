@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>js-basics-11-function | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="function重点：事件处理程序的运行环境，如何解除事件处理程序，事件处理模型（冒泡，捕获），阻止默认事件，事件对象，事件委托，事件分类 1、ele.onxxx &#x3D; function (event) {}程序 this 指向是 dom 元素本身（指向自己） 、obj.addEventListener(type, fn, false);程序 this 指向是 dom 元素本身（指向自己） 解除事件">
+<meta property="og:type" content="article">
+<meta property="og:title" content="js-basics-11-function">
+<meta property="og:url" content="http://yoursite.com/2020/03/11/js-basics-11-function/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="function重点：事件处理程序的运行环境，如何解除事件处理程序，事件处理模型（冒泡，捕获），阻止默认事件，事件对象，事件委托，事件分类 1、ele.onxxx &#x3D; function (event) {}程序 this 指向是 dom 元素本身（指向自己） 、obj.addEventListener(type, fn, false);程序 this 指向是 dom 元素本身（指向自己） 解除事件">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-03-11T02:42:36.000Z">
+<meta property="article:modified_time" content="2020-03-11T02:45:30.199Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/blog/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/blog/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/blog/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/blog/">Home</a>
+        
+          <a class="main-nav-link" href="/blog/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/blog/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-js-basics-11-function" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2020/03/11/js-basics-11-function/" class="article-date">
+  <time datetime="2020-03-11T02:42:36.000Z" itemprop="datePublished">2020-03-11</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      js-basics-11-function
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>function<br>重点：事件处理程序的运行环境，如何解除事件处理程序，事件处理模型（冒泡，捕获），阻止默认事件，事件对象，事件委托，事件分类</p>
+<p>1、ele.onxxx = function (event) {}<br>程序 this 指向是 dom 元素本身（指向自己）</p>
+<p>、obj.addEventListener(type, fn, false);<br>程序 this 指向是 dom 元素本身（指向自己）</p>
+<p>解除事件处理程序<br>1、ele.onclick = false/‘’/null;    ==&gt;    解除 ele.onxxx = function (event) {}<br>2、ele.removeEventListener(type, fn, false);==&gt;解除 addEventListener(type, fn, false) 3、ele.detachEvent(‘on’ + type, fn);    ==&gt; obj.attachEvent(‘on’ + type, fn);<br>注:若绑定匿名函数，则无法解除<br>例用 div.onclick = null;解除事件，</p>
+<p>3、obj.attachEvent(‘on’ + type, fn);<br>程序 this 指向window<br>例让 obj.attachEvent 指向自己，function handle(){}里面是事件处理程序</p>
+<p>例只能执行一次的事件的写法</p>
+<p>4、封装兼容性的 addEvent(elem, type, handle);方法（必须会）<br>addEvent 是给一个 dom 对象添加一个该事件类型的处理函数例</p>
+<p>例 ele.removeEventListener(type, fn, false);    1、事件冒泡：</p>
+<p>结构上存在父子关系的元素，如果点击到子元素，会一级级向父元素传递这个事件<br>（从代码的角度是自底向上一层层冒泡的）<br>例加了 margin，只点黄色的，还是出现了 box,content,wrapper。所以与视觉无关</p>
+<p>test 如果填 function(){}别人就找不到他，就没办法清除，所以此时的函数体要写在外面<br>例 ele.detachEvent(‘on’ + type, fn);清除绑定时一摸一样的 obj.attachEvent(‘on’ + type,<br>fn);</p>
+<p>事件处理模型 — 事件冒泡、捕获事件处理的两个模型：事件冒泡、捕获（不能同时存在） 例</p>
+<p>2、事件捕获：（只有谷歌有，最新火狐有）</p>
+<p>2）IE 没有捕获事件<br> 一个对象的一个事件类型，只能存在一个事件处理模型（冒泡或捕获）<br>obj.addEventListener(type, fn, true);第三个参数为true 就是事件捕获<br>例点击黄的：先红的捕获事件并且执行，再绿的捕获事件并且执行，最后只执行事件黄的。捕获是把结构的最外面先抓住。最外面先捕获，再一层层向里面捕获，最里面的是按常规执行。<br>例把 false 改成 true，就变成了事件捕获<br>html 部分沿用左侧冒泡情况的代码，只把 false 改成 true 就变成事件捕获了</p>
+<p>只点了黄色区域，但是出现了 box,content,wrapper，往下漏了，就是事件冒泡</p>
+<p>思考：同一个对象的同一个事件类型，上面绑定了两个事件处理函数，一个符合冒泡，一个符合捕获，点击一个元素后，是先捕获，还是先冒泡？<br>3、触发顺序，先捕获，后冒泡</p>
+<p>取消冒泡和阻止默认事件<br>例不给 div 绑定事件处理函数，依然会冒泡（document 冒泡到 div 上）</p>
+<p>例 html 部分沿用上一页冒泡情况的代码</p>
+<p>例给 div 也帮个事件（点红色，也冒泡到 document）</p>
+<p>在每一个事件处理函数中【div.onclick=function(){}】，我们可以写一个形参（如 e），系统可以传递事件对象（记载了数据发生时的状态和信息）到这个参数里面去</p>
+<p>例    改变了冒泡和捕获的顺序</p>
+<p>1）W3C 标准 event.stopPropagation();但不支持 ie9 以下版本<br>例事件对象上有一个 event.stopPropagation();取消冒泡事件</p>
+<p>2）IE 独有 event.cancelBubble = true;【实际上谷歌也实现了】<br>例 ie 里面事件对象上有一个 event.cancelBubble = true;能取消冒泡事件</p>
+<p>这个的顺序是先捕获红色，再捕获绿色，boxBubble 黄色区域事件执行，box 黄色区域事件执行，冒泡到绿色，冒泡到红色（谁先绑定，谁先执行，boxBubble 先绑定， 所以先执行）<br>4、focus，blur，change，submit，reset，select 等事件不冒泡</p>
+<p>3）封装取消冒泡的函数 stopBubble(event)</p>
+<p>3）event.preventDefault(); W3C 标注，IE9 以下不兼容<br>例</p>
+<p>4）event.returnValue = false; 兼容 IE<br>例</p>
+<p>5）封装阻止默认事件的函数 cancelHandler(event);<br>例</p>
+<p>例浏览器点右键出菜单，是一个事件（默认事件）</p>
+<p>例 a 标签有一个跳转的默认时间，如何取消看下面</p>
+<p>2）return false;    兼容性非常好，以对象属性的方式注册的事件才生效（这是句柄的方式阻止默认事件，只有句柄的方式绑定事件才好使）<br>例</p>
+<p>ele.onxxx = function (event) {}是句柄的绑定方式，才能用 return false;</p>
+<p>2、事件源对象:（找事件源对象的方法） event.target    火狐独有的event.srcElement    Ie 独有的<br>这俩 chrome 都有<br>例事件源对象的兼容性写法</p>
+<p>事件委托<br>例我们给每个 li 绑定事件，要求点哪个 li 就输出哪个内容，这不涉及闭包问题</p>
+<p>上面的写法不好（如果是三千亿个 li 就没效率），不能动态，要用事件源和事件冒泡</p>
+<p>事件委托：利用事件冒泡，和事件源对象进行处理优点：<br>1.性能  不需要循环所有的元素一个个绑定事件<br>2.灵活  当有新的子元素时不需要重新绑定事件<br>例给每个 li 绑定事件，再增加 li 也能使用</p>
+<p>扫雷的雷也可以放 ul 上<br>作业：预习下面的三个词，写拖拽功能（鼠标按住方块跟着动，松开就不跟着走）<br>答案</p>
+<p>上面这个写法有问题，鼠标在方块的左上角，不在你点击他时候的位置</p>
+<p>思路：上面是把点击鼠标的点设置成方块的 left 和 top（就是把鼠标的点设置成了左顶点，这样就少了个距离），我们把这个距离算上就可以了，加上鼠标第一次点击时候的离方块上边和左边的距离再赋给左上角了<br>之前是把 div.onmousemove 写在div 上面，有一个 bug，我们按住鼠标迅速离开方块，方块就不会跟着动，一直按住鼠标，再一进去，又可以带着方块动了，是一个事件监听的问题（鼠标挪动频次大于事件监听频次），我们写成 document.onmousemove就可以了</p>
+<p>上面这个写的很粗糙，没有封装也没有绑定。document.onmousemove=function(){}这种写法是不可以的，要用 addEventListener 绑定。作业就是把上面绑定成函数，函数名叫 function drag (elem) {}<br>例</p>
+<p>面试问题，什么是事件捕获，一个是冒泡，一个是捕获 obj.addEventListener(type, fn, true);他所说的第二种捕获不是事件处理模型，而是一种真实的事件获取的过程，用于解决拖拽鼠标出方块的问题<br>仅在 ie 好使，利用 div.setCapture();会捕获页面上发生的所有事情，都获取到自己身上。对应的用 div.releaseCapture();释放。但是方法比较老旧，一般不用。</p>
+<p>例 click 不能监听右中</p>
+<p>4、如何解决 mousedown 和 click 的冲突</p>
+<p>click、mousedown、mousemove、mouseup、contextmenu、mouseover、mouseout、mouseenter 、 mouseleave<br>例 click=mousedown+mousemove</p>
+<p>这三个事件的触发顺序是mousedown，mouseup，click<br>例 contextmenu 右键取消菜单，mousemove 是鼠标移动的事件<br>例相对应 mouseover、mouseout 鼠标覆盖区域与 mouseenter 、mouseleave 鼠标离开但是 mouseenter 、mouseleave 是 html5 的，都是鼠标进去，出来发生的变化</p>
+<p>2、用button 来区分鼠标的按键，0/1/2<br>只有 mouseup、mousedown 两个能区分鼠标垫左右键<br>button 返回值，右键是 0，左键是 2，中间是 1<br>例</p>
+<p>事件练习作业<br>1、拖拽应用：实现拖拽正常拖，但是点击就正常跳转<br>思路：拖拽由 down+move+up，但是不管隔多久都算一个 click，可以理解成拖拽不等于点击 click。看时间差解决：按下+抬起的时间差&gt;多少，就能知道是拖拽了。答案：按下之后才绑定move 事件，抬起了 move 事件就解除</p>
+<p>2、应用 mousedown mousemove mouseup 3、随机移动的方块（完全随机）<br>思路：当把鼠标挪到方块里面去onmouseover 的时候，方块随机向八个方向挪动<br>4、mouseover<br>移动端 onmousedown 不能用，只能用 touchstart,touchmove,touchend</p>
+<p>1、keydown，keyup，keypress</p>
+<p>事件分类</p>
+<p>例 change 对比鼠标聚焦，或失去焦点的时，两个状态是否发生改变，如果两个状态没有改变就不触发，如果发生改变就触发</p>
+<p>2、触发顺序是 keydown &gt; keypress &gt; keyup</p>
+<p>keydown 可以响应任意键盘按键，keypress 只可以相应字符类键盘按键<br>检测字符类不准确，keypress 检测字符很准。但是 keydown 能监控所有，包括上下左右都能监控，但是 keypress 只能监视字符。<br>用法：如果你想监控字符类按键，并想区分大小写，就用 keypress，如果是操作类按键的话，就用 keydown（which：39 是给按键牌号 39，不是 asc 码）<br>2）keypress 返回ASCII 码，可以转换成相应字符<br>例连续按键盘按键的时候就是连续触发 keydown 和keypress，松开触发keyup</p>
+<p>注意：游戏触发设置在 keydown 上，机械键盘抬起速度快反馈力量大，对游戏没用<br>小写的 a 的 charCode 返回的是<br>例利用下面，把 Unicode 编码转成对应值</p>
+<p>二、文本操作事件<br>input，change，focus，blur</p>
+<p>例 focus，blur 聚焦和失去焦点</p>
+<p>三、窗体操作类(window 上的事件)    scroll，load<br>例 scroll 当滚动条一滚动，scroll 事件就触发了</p>
+<p>ie6 没 fixed 定位，就用 position 的 top=原来的 top+滚动条的位置来写。absolute 定位相对于文档定位，用absolute 定位模拟 fixed 定位，挪动距离加载absolute 的 top 上读到 js 的时候就阻断页面，所以必须把 js 写在下面才能把上面的东西读出来。<br>例 load 重要但是不用。window.onload 发生在什么时候</p>
+<p>利用了 onload 就能操作写在下面的 div 了，但是我们不能这样用。<br>理由：html 和 css 是一起解析的，在解析的时候会有 html 有 domTree，css 有 cssTree 生成（树形图的顶底是document，然后是html，然后是 head，body），两个树拼在一起是 renderTree。</p>
+<p>什么时候把节点放在树里？dom 节点解析，如确定是 img 标签就把他放到树里。（先解析完 img，同时开启一个线程异步的去下载里面的内容，后下载完）。<br>我们把 js 的 script 标签写在最下面的好处是，这些刚刚解析完 js 就能操作页面了， 就更快了。而 window.onload 要等整个页面解析完，下载完才能操作 js，才能触发事件（效率很差）。onload 能提醒我们什么时候整个页面解析完毕。在设计广告时，就要用 onload，等整个页面下载完了才开始用，但是onload 绝对用于主程序里面。</p>
+<p>小练习:fixed 定位 js 兼容版    //ie6 没有 fixed 定位，用 position:absolution 是相对于文档定位。模拟fixed 定位，跟着解决文档拖的问题。position-top= 原来的position-top</p>
+<ul>
+<li>滚动条的位置</li>
+</ul>
+<p>作业<br>1、完善轮播图，加按钮    //提示：用留的接口，加两个按钮，改参数<br>2、提(qie)取密码框的密码    //提示：监听键盘事件<br>3、输入框功能完善<br>4、菜单栏（二阶菜单栏）    //提示：先写一个 div，开始的时候 display：none，等鼠标挪上去，变成 display：block</p>
+<p>5、贪食蛇游戏    //提示：蛇头动，蛇尾怎么跟着动，控制蛇头操作就可以了，蛇尾的每一节跟着前一节动<br>6、扫雷游戏    //注意闭包，有个扩散算法。<br>二维数组就是数组里面套数组(像矩阵)，可以表示坐标点<br>arr[1][1]说的是第二行第二列，也就是 22</p>
+<p>可以尝试做：球击方块（板子）的游戏</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2020/03/11/js-basics-11-function/" data-id="ck7mq1njg0000e0u1bgmz24ly" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/blog/2020/03/11/js-basics-10-dom/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">js-basics-10-dom</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2020/03/">March 2020</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/blog/2020/03/11/js-basics-11-function/">js-basics-11-function</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2020/03/11/js-basics-10-dom/">js-basics-10-dom</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2020/03/10/js-basics-9-es5/">js-basics-9-es5</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2020/03/10/js-basics-8-try-catch/">js-basics-8-try-catch</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2020/03/10/js-basics-7-array/">js-basics-7-array</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/blog/" class="mobile-nav-link">Home</a>
+  
+    <a href="/blog/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/blog/fancybox/jquery.fancybox.css">
+
+  
+<script src="/blog/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/blog/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>
