@@ -64,6 +64,51 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-js-basics-8-try-catch" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2020/03/10/js-basics-8-try-catch/" class="article-date">
+  <time datetime="2020-03-10T15:49:28.000Z" itemprop="datePublished">2020-03-10</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2020/03/10/js-basics-8-try-catch/">js-basics-8-try-catch</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p> try…catch</p>
+<p>防止我们报错</p>
+<p>try 花括号{里面会正常执行，但是遇到 b 报错时 b 就执行不出来，后面的代码 c 就不<br> 执行了，但是外面的代码d 还能执行}catch(e)，这个 e 可以随便写，写 abc 都可以， 也是个形参</p>
+<p>在 try 里面的发生错误，不会执行错误后的 try 里面的代码<br>catch</p>
+<p> 如果 try 里面的代码不出错，在catch 里面的代码就不执行；<br> 如果 try 里面的代码出错，catch 负责补抓到错误信息封装到里面（error.massage     error.name），错误对象只有message 和 name。</p>
+<p>try{}catch(e) {}finally{}</p>
+<p>例在 es5.0 不能用 argument.callee，但是 es3.0 可以用</p>
+<p>例 function test( ){ }里面加“use strict” ;是局部启动严格模式</p>
+<p>Error.name 的六种值对应的信息：<br>（前面是错误名称，后面是错误信息）<br>1.EvalError：eval()的使用与定义不一致<br>//eval 是不被允许使用的<br>2.RangeError：数值越界<br>3.ReferenceError：非法或不能识别的引用数值<br>//未经声明就使用，没有定义就使用<br>4.SyntaxError：发生语法解析错误<br>// Syntax 是语法解析（）<br>5.TypeError：操作数类型错误<br>6.URIError：URI 处理函数使用不当<br>//引用地址错误<br>大部分都是 3 和 4 这种错误<br>伪代码也可以写了，可以写 var  老邓 = 123；这就是伪代码<br>var str = avs    ==&gt;    ReferenceError</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2020/03/10/js-basics-8-try-catch/" data-id="ck7ydi4gt000bw4u14i3u75ns" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-js-basics-7-array" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/blog/2020/03/10/js-basics-7-array/" class="article-date">
@@ -141,7 +186,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/03/10/js-basics-7-array/" data-id="ck7xh5r39000fcku1eehaf845" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/03/10/js-basics-7-array/" data-id="ck7ydi4hh000iw4u1d54g5dh9" class="article-share-link">Share</a>
       
       
     </footer>
@@ -204,7 +249,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/03/10/js-basics-6-this/" data-id="ck7xh5r210006cku1fak82yfu" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/03/10/js-basics-6-this/" data-id="ck7ydi4g80007w4u1bi782l4w" class="article-share-link">Share</a>
       
       
     </footer>
@@ -292,7 +337,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/03/10/js-basics-5-inherit/" data-id="ck7xh5r2s000dcku113mqgkoq" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/03/10/js-basics-5-inherit/" data-id="ck7ydi4hf000gw4u1h4t915bm" class="article-share-link">Share</a>
       
       
     </footer>
@@ -399,7 +444,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/03/10/js-basics-4-object/" data-id="ck7xh5r2t000ecku119jsfzib" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/03/10/js-basics-4-object/" data-id="ck7ydi4h2000fw4u1ab30aw6a" class="article-share-link">Share</a>
       
       
     </footer>
@@ -444,7 +489,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/03/10/js-basics-3-closure/" data-id="ck7xh5r3c000gcku195q674us" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/03/10/js-basics-3-closure/" data-id="ck7ydi4g50006w4u1gy0laai8" class="article-share-link">Share</a>
       
       
     </footer>
@@ -505,7 +550,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/03/10/js-basics-2-precompile/" data-id="ck7xh5r2n000bcku10766ao9u" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/03/10/js-basics-2-precompile/" data-id="ck7ydi4h1000ew4u15upg99vv" class="article-share-link">Share</a>
       
       
     </footer>
@@ -675,7 +720,7 @@ var a; 这个叫变量声明。我们向系统中申请了 var 这个框，命�
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/03/10/js-basics-1-type/" data-id="ck7xh5r3l000icku1aawn47xt" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/03/10/js-basics-1-type/" data-id="ck7ydi4i7000jw4u18ve44xts" class="article-share-link">Share</a>
       
       
     </footer>
@@ -711,7 +756,7 @@ var a; 这个叫变量声明。我们向系统中申请了 var 这个框，命�
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/03/07/firstblog/" data-id="ck7xh5r1z0003cku1hl2zfjkm" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/03/07/firstblog/" data-id="ck7ydi4g20003w4u1czug7aj4" class="article-share-link">Share</a>
       
       
     </footer>
@@ -760,7 +805,7 @@ var a; 这个叫变量声明。我们向系统中申请了 var 这个框，命�
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/03/07/hello-world/" data-id="ck7xh5r210005cku14roo6qgg" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/03/07/hello-world/" data-id="ck7ydi4g40005w4u12aj67t1z" class="article-share-link">Share</a>
       
       
     </footer>
@@ -806,6 +851,10 @@ var a; 这个叫变量声明。我们向系统中申请了 var 这个框，命�
       <ul>
         
           <li>
+            <a href="/blog/2020/03/19/http-state-codes/">http-state-codes</a>
+          </li>
+        
+          <li>
             <a href="/blog/2020/03/15/RegExp/">RegExp</a>
           </li>
         
@@ -819,10 +868,6 @@ var a; 这个叫变量声明。我们向系统中申请了 var 这个框，命�
         
           <li>
             <a href="/blog/2020/03/11/js-bascis-MindMater/">js-bascis-MindMater</a>
-          </li>
-        
-          <li>
-            <a href="/blog/2020/03/11/html-css-basics-sunmmary/">html-css-basics-sunmmary</a>
           </li>
         
       </ul>
