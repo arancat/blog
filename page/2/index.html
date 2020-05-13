@@ -64,6 +64,54 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-js-basics-9-es5" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2020/03/10/js-basics-9-es5/" class="article-date">
+  <time datetime="2020-03-10T15:53:33.000Z" itemprop="datePublished">2020-03-10</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2020/03/10/js-basics-9-es5/">js-basics-9-es5</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>es5.0 严格模式</p>
+<p>（这章就是讲 es3.0 和 es5.0 产生冲突的部分） 浏览器是基于 es3.0 和 es5.0 的新增方法使用的。如果两种发生了冲突，就用 es3.0。<br>es5.0 严格模式是指 es3.0 和 es5.0 产生冲突发部分就是用 es5.0，否则就用es3.0。es5.0 严格模式的启动“use strict” ;<br>用法在写“use strict”，可以写在全局的最顶端，也可以写在某函数（局部）的最顶端，推荐使用局部的。</p>
+<p>在 es5.0 不能用 argument.callee，但是 es3.0 可以用例 function test( ){ }里面加“use strict” ;是局部启动严格模式<br>全局严格模式<br>局部函数内严格模式（推荐）<br>就是一行字符串，不会对不兼容严格模式的浏览器产生影响。<br>不支持with，arguments.callee，function.caller，变量赋值前必须声明，局部 this<br>必须被赋值(Person.call(null/undefined) 赋值什么就是什么),拒绝重复属性和参数<br>例<br>浏览器升级到 es5.0 才好用写 strict( );就有风险<br>写成“use strict” ;有一个向后兼容的作用<br>例 es5.0 严格模式不让使用 with。with 可以改变作用域链<br>with（）括号里面的代码会按照正常顺序执行，但是如果在括号里面添加了对象，就会把对象当做 with 要执行的代码体的作用域链的最顶端（最直接的最近的 AO）。</p>
+<p>下面这个 with 看到的就是 var obj 的 name （with 改变作用域链）</p>
+<p>例命名空间应该像下面这样用的，with 可以简化代码<br>这也是 with 的运用方式<br>用 with 表示 document.write<br>with 过于强大，可以改作用域链，失去效率，所以 es5.0 不能用<br>rguments.callee 在 es5.0 严格模式下报错</p>
+<p>es5.0 严格模式中：变量赋值前必须声明，局部 this 必须被赋值(Person.call(null/undefined) 赋值什么就是什么),拒绝重复属性和参数（this 不在指向window）</p>
+<p>例局部 this 必须被赋值(Person.call(null/undefined) 赋值什么就是什么)</p>
+<p>该对象的 constructor 是 Test，</p>
+<p>全局的 this 指向 window</p>
+<p>例拒绝重复属性和参数（this 不在指向window）</p>
+<p>eval 很强大，能把字符串当成代码来执行<br>但是约定俗成在es3.0 中都不能使用 eval。eval 是魔鬼，因为会改变作用域</p>
+<p>如果改变 global，他改变的是全局的<br>当情况不同，eval 改变的作用域是不同的<br>eval 还有自己独立的作用域<br>理解：可以把回调函数理解为先定义好了函数，执行的时候再回头调用<br>dom 这章之前是笔试面试的重点</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2020/03/10/js-basics-9-es5/" data-id="cka55cwnz000i7wu1ad2q40u7" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-js-basics-8-try-catch" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/blog/2020/03/10/js-basics-8-try-catch/" class="article-date">
@@ -99,7 +147,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/03/10/js-basics-8-try-catch/" data-id="ck7ydi4gt000bw4u14i3u75ns" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/03/10/js-basics-8-try-catch/" data-id="cka55cwo9000j7wu1fewdg8uv" class="article-share-link">Share</a>
       
       
     </footer>
@@ -186,7 +234,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/03/10/js-basics-7-array/" data-id="ck7ydi4hh000iw4u1d54g5dh9" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/03/10/js-basics-7-array/" data-id="cka55cwny000g7wu1ciofhui1" class="article-share-link">Share</a>
       
       
     </footer>
@@ -249,7 +297,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/03/10/js-basics-6-this/" data-id="ck7ydi4g80007w4u1bi782l4w" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/03/10/js-basics-6-this/" data-id="cka55cwn700097wu15akz9669" class="article-share-link">Share</a>
       
       
     </footer>
@@ -337,7 +385,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/03/10/js-basics-5-inherit/" data-id="ck7ydi4hf000gw4u1h4t915bm" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/03/10/js-basics-5-inherit/" data-id="cka55cwny000h7wu1djx07l2t" class="article-share-link">Share</a>
       
       
     </footer>
@@ -444,7 +492,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/03/10/js-basics-4-object/" data-id="ck7ydi4h2000fw4u1ab30aw6a" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/03/10/js-basics-4-object/" data-id="cka55cwnw000e7wu15qyzghgf" class="article-share-link">Share</a>
       
       
     </footer>
@@ -489,7 +537,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/03/10/js-basics-3-closure/" data-id="ck7ydi4g50006w4u1gy0laai8" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/03/10/js-basics-3-closure/" data-id="cka55cwn600087wu185e3hcov" class="article-share-link">Share</a>
       
       
     </footer>
@@ -550,7 +598,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/03/10/js-basics-2-precompile/" data-id="ck7ydi4h1000ew4u15upg99vv" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/03/10/js-basics-2-precompile/" data-id="cka55cwnx000f7wu1dl8agocx" class="article-share-link">Share</a>
       
       
     </footer>
@@ -720,7 +768,7 @@ var a; 这个叫变量声明。我们向系统中申请了 var 这个框，命�
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/03/10/js-basics-1-type/" data-id="ck7ydi4i7000jw4u18ve44xts" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/03/10/js-basics-1-type/" data-id="cka55cwou000k7wu13vd3g8bt" class="article-share-link">Share</a>
       
       
     </footer>
@@ -756,56 +804,7 @@ var a; 这个叫变量声明。我们向系统中申请了 var 这个框，命�
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/03/07/firstblog/" data-id="ck7ydi4g20003w4u1czug7aj4" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/blog/2020/03/07/hello-world/" class="article-date">
-  <time datetime="2020-03-06T16:05:16.205Z" itemprop="datePublished">2020-03-07</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2020/03/07/hello-world/">Hello World</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/03/07/hello-world/" data-id="ck7ydi4g40005w4u12aj67t1z" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/03/07/firstblog/" data-id="cka55cwmo00037wu1hzxleg9w" class="article-share-link">Share</a>
       
       
     </footer>
@@ -819,7 +818,7 @@ var a; 这个叫变量声明。我们向系统中申请了 var 这个框，命�
 
   <nav id="page-nav">
     
-    <a class="extend prev" rel="prev" href="/blog/">&amp;laquo; Prev</a><a class="page-number" href="/blog/">1</a><span class="page-number current">2</span>
+    <a class="extend prev" rel="prev" href="/blog/">&amp;laquo; Prev</a><a class="page-number" href="/blog/">1</a><span class="page-number current">2</span><a class="page-number" href="/blog/page/3/">3</a><a class="extend next" rel="next" href="/blog/page/3/">Next &amp;raquo;</a>
   </nav>
 
 </section>
@@ -838,7 +837,7 @@ var a; 这个叫变量声明。我们向系统中申请了 var 这个框，命�
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2020/03/">March 2020</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2020/03/">March 2020</a></li></ul>
     </div>
   </div>
 
@@ -849,6 +848,10 @@ var a; 这个叫变量声明。我们向系统中申请了 var 这个框，命�
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/blog/2020/05/13/C-number01-part01/">C-number01-part01</a>
+          </li>
         
           <li>
             <a href="/blog/2020/03/19/http-state-codes/">http-state-codes</a>
@@ -864,10 +867,6 @@ var a; 这个叫变量声明。我们向系统中申请了 var 这个框，命�
         
           <li>
             <a href="/blog/2020/03/15/DOM/">DOM</a>
-          </li>
-        
-          <li>
-            <a href="/blog/2020/03/11/js-bascis-MindMater/">js-bascis-MindMater</a>
           </li>
         
       </ul>
